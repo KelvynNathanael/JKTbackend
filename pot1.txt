@@ -1,0 +1,35 @@
+  app.post("/signin", async (req, res) => {
+    try {
+        // Check email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(req.body.email)) {
+            req.flash("error", "Invalid email format");
+            return res.redirect("/signin");
+        }
+        // Cek apakah pengguna dengan email atau nama yang sama sudah ada
+        const existingUser = await User.findOne({ $or: [{ email: req.body.email }, { name: req.body.name }] });
+        if (existingUser) {
+            if (existingUser.email === req.body.email) {
+                req.flash("error", "Email already exists");
+            } else if (existingUser.name === req.body.name) {
+                req.flash("error", "Name already exists");
+            }
+            return res.redirect("/signin");
+        } else {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10); // Hash password menggunakan bcrypt
+    
+            const newUser = new User({
+                name: req.body.name,
+                email: req.body.email,
+                password: hashedPassword, // Menyimpan password yang telah di-hash
+            });
+    
+            await newUser.save(); // Menyimpan pengguna baru ke dalam database
+            console.log(newUser); // Menampilkan informasi pengguna baru di console
+            res.redirect("/login"); // Redirect ke halaman login setelah berhasil mendaftar
+        }
+    } catch (e) {
+        console.log(e);
+        res.redirect("/signin");
+    }
+});

@@ -1,0 +1,54 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const port = 3000;
+const path = require('path');
+
+
+const app = express();
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+
+// Define the directory where your HTML files (views) are located
+app.set('views', path.join(__dirname, 'views'));
+
+// Optionally, you can define a static files directory (CSS, JS, images, etc.)
+app.use(express.static(path.join(__dirname, 'public')));
+
+const use = mongoose.connect('mongodb://127.0.0.1:27017/Test')
+  .then(() => console.log('Connected!'));
+//Define a schema for the data to be stored in MongoDB
+var UserData = new mongoose.Schema({
+  name: String,
+  age: Number,
+});
+
+// Create a model using the defined schema
+var userModel = mongoose.model('auth', UserData);
+
+// Add a single entry to the database
+function addUser(data) {
+  // Use userModel.create() for data insertion
+  return userModel.create(data)
+    .then(() => console.log("Saved!"))
+    .catch(err => console.error("Error creating user:", err));
+}
+const userData = { name: "John anjas", age: 7272 };
+addUser(userData);
+
+
+app.get('/', (req, res) => {
+  res.render('index'); // Assuming you have an "index.ejs" file in the "views" directory
+});
+
+// Retrieve all entries from the database and print them out
+app.get('/userJson', function(req, res) {
+    userModel.find({}).then(function(user){
+      res.json(user)
+    })
+});
+
+
+
+app.listen(port, () => {
+  console.log(`Example app listening on port http://localhost:${port}`)
+})
