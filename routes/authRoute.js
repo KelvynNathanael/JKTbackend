@@ -22,26 +22,19 @@ router.post('/login', async (req, res) => {
 
     const existingUser = await userModel.findOne({ name });
 
-    if (existingUser) {
-      const isMatch = bcrypt.compare(pwd, existingUser.password); // Compare hashed passwords
-
-      if (pwd == existingUser.password) {
-        console.log("Login success, welcome ", name);
+    if(!existingUser){
+      req.flash('error', 'Invalid username or password');
+      console.log("Invalid username or password");
+      return res.redirect('/login');
+    }
+    if(pwd !== existingUser.password){
+      req.flash('error', 'Invalid username or password');
+      console.log("Invalid username or password");
+      return res.redirect('/login');
+    }else{
+      console.log("Login success, welcome ", name);
         // ... successful login logic (e.g., create session)
         return res.redirect('/membership');
-      } else {
-        req.flash('error', 'Invalid username or password');
-        console.log("tolol")
-        console.log(isMatch)
-        console.log(pwd)
-        console.log(existingUser.password)
-        
-        return res.redirect('/login');
-      }
-    } else {
-      req.flash('error', 'Invalid username or password');
-      console.log("tolol123")
-      return res.redirect('/login');
     }
   } catch (err) {
     console.error("Error logging in:", err);
