@@ -16,38 +16,7 @@ app.use(flash())
 router.post('/signup', authController.signup);
 
 
-router.post('/login', async (req, res) => {
-  try {
-    const { name, pwd } = req.body;
-
-    const existingUser = await userModel.findOne({ name });
-
-    if (existingUser) {
-      const isMatch = bcrypt.compare(pwd, existingUser.password); // Compare hashed passwords
-
-      if (pwd == existingUser.password) {
-        console.log("Login success, welcome ", name);
-        // ... successful login logic (e.g., create session)
-        return res.redirect('/membership');
-      } else {
-        req.flash('error', 'Invalid username or password');
-        console.log("tolol")
-        console.log(isMatch)
-        console.log(pwd)
-        console.log(existingUser.password)
-        
-        return res.redirect('/login');
-      }
-    } else {
-      req.flash('error', 'Invalid username or password');
-      console.log("tolol123")
-      return res.redirect('/login');
-    }
-  } catch (err) {
-    console.error("Error logging in:", err);
-    res.status(500).send("Error logging in");
-  }
-});
+router.post('/login', authController.login);
 
 
-  module.exports = router;
+module.exports = router;
