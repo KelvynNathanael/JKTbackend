@@ -12,6 +12,11 @@
             <h2>Log in | JKT-48</h2>
             <input type="text" placeholder="Username" required name ="name">
             <input type="password" placeholder="Password" required name ="pwd">
+            <% if (messages.error) { %>
+                <p class="error">
+                    <%= messages.error %>
+                </p>
+            <% } %>
             <button type="submit">Login</button>
             <p>Don't have an account? <a href="/signup">Sign up</a></p>
         </form>
