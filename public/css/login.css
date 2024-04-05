@@ -7,6 +7,10 @@ body {
     height: 100vh;
 }
 
+.error{
+    color: red;
+}
+
 .container {
     width: 100%;
     max-width: 400px;
@@ -53,7 +57,7 @@ p {
 }
 
 a {
-    color: #ff0066;
+    color: #0000EE;
     text-decoration: none;
 }
 

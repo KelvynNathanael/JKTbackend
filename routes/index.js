@@ -7,7 +7,7 @@ const router = express.Router();
 app.use(flash())
 
 router.get('/login', (req, res) => {
-  res.render('index'); 
+  res.render('index', {messages: req.flash()}); 
 });
 router.get('/signup', (req, res) => {
   res.render('signup', {messages: req.flash() }); 
