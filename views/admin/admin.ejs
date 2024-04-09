@@ -1,0 +1,102 @@
+<span style="font-family: verdana, geneva, sans-serif;">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Attendance Dashboard | By Code Info</title>
+      <link rel="stylesheet" href="css/admin.css" />
+      <!-- Font Awesome Cdn Link -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    </head>
+    <body>
+      <div class="container">
+        <nav>
+          <ul>
+            <li><a href="#" class="logo">
+              <img src="./pic/logo.jpg">
+              <span class="nav-item">{{admin}}</span>
+            </a></li>
+            <li><a href="#">
+              <i class="fas fa-database"></i>
+              <span class="nav-item">Users</span>
+            </a></li>
+            <li><a href="#">
+              <i class="fas fa-database"></i>
+              <span class="nav-item">Talent</span>
+            </a></li>
+            <li><a href="#" class="logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="nav-item">Log out</span>
+            </a></li>
+          </ul>
+        </nav>
+        <section class="main">    
+          <section class="attendance">
+            <div class="attendance-list">
+              <h1>Users</h1>
+              <form action="/admin/create" method="post">
+                <input type="hidden">
+                <button type="submit" class="Create"> + Create User</button>
+              </form>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>admin</th>
+                    <th>action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% i=1 %>
+                  <% users.forEach(user => { %>
+                    <tr>
+                      <td><%= i++  %></td>
+                      <td><%= user.name %></td>
+                      <td><%= user.isAdmin %></td>
+                      <td>
+                        <form action="/admin/delete" method="post" onsubmit="return confirmDelete()">
+                          <input type="hidden" name="userId" value="<%= user._id %>">
+                          <button type="submit" class="delete">Delete</button>
+                        </form>
+                        <!-- <form action="/admin/edit" method="post">
+                          <input type="hidden" name="userId" value="<%= user._id %>">
+                          <button type="submit" class="edit">edit</button>
+                        </form> -->
+                      </td>
+                    </tr>
+                  <% }); %>
+
+                  <!-- <tr >
+                    <td>05</td>
+                    <td>Salina</td>
+                    <td>Coding</td>
+                    <td>03-24-22</td>
+                    <td>9:00AM</td>
+                    <td>4:00PM</td>
+                    <td><button>View</button></td>
+                  </tr>
+                  <tr >
+                    <td>06</td>
+                    <td>Tara Smith</td>
+                    <td>Testing</td>
+                    <td>03-24-22</td>
+                    <td>9:00AM</td>
+                    <td>4:00PM</td>
+                    <td><button>View</button></td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </div>
+
+      <script>
+        function confirmDelete() {
+          return confirm("Are you sure you want to delete this user?");
+        }
+      </script>
+    </body>
+    </html>
+    </span>

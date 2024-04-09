@@ -33,3 +33,51 @@
         res.redirect("/signin");
     }
 });
+
+app.post("/signup", async (req, res) => {
+    const data = {
+        name: req.body.username,
+        password: req.body.password
+    }
+    
+    //cek apakah nama sama atau tidak
+    const existingUser = await collection.findOne({name: data.name});
+    if(existingUser){
+        res.render("signup", { errorMessage: "User already exist, pick another Username." });
+            return;
+    }else{
+        //hash password
+        const saltRounds = 10;
+        const hashedpassword = await bcrypt.hash(data.password, saltRounds);
+
+        data.password = hashedpassword;
+
+        const userdata = await collection.insertMany(data);
+        console.log(userdata);    
+
+        res.render("login", { errorMessage: "" });
+    }
+});
+
+
+app.post("/login", async (req, res) => {
+    try {
+        const check = await collection.findOne({ name: req.body.username });
+
+        if (!check) {
+            res.render("login", { errorMessage: "User name can't be found" });
+            return;
+        }
+        
+        // Compare passwords
+        const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
+        if (!isPasswordMatch) {
+            res.render("login", { errorMessage: "Wrong password" });
+        } else {
+            res.render("index", { userName: check.name });
+        }
+    } catch (error) {
+        console.error(error);
+        res.render("login", { errorMessage: "An error occurred while processing your request." });
+    }
+});

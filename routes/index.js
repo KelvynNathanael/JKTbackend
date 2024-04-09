@@ -13,6 +13,18 @@ router.get('/signup', (req, res) => {
   res.render('signup', {messages: req.flash() }); 
 });
 
+router.get('/admin', (req, res) => {
+  userModel.find({})
+      .then(users => {
+          res.render('admin/admin', { users });
+      })
+      .catch(error => {
+          console.error('Error fetching users:', error);
+          res.status(500).send('Internal Server Error');
+      });
+});
+
+
 // JSON data view ()
 router.get('/users', async (req, res) => {
     userModel.find({}).then(function(user){
@@ -25,8 +37,9 @@ router.get( '/membership' , ( req , res ) =>{
 });
 
 router.get( '/' , ( req , res ) =>{
-   res.redirect( "/login" );
+   res.redirect( "/membership" );
 });
+
 
 
 module.exports = router;

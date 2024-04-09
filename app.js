@@ -5,7 +5,7 @@ const userModel = require('./models/userModel');
 const flash = require('connect-flash');
 const session = require('express-session');
 
-const port = 6969;
+const port = 3000;
 const app = express();
 
 app.use(express.json())//??
@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set route
 app.use('/', require('./routes/index')); // Page route
 app.use('/', require('./routes/authRoute')); // Auth route
+app.use('/', require('./routes/crudRoute')); // Auth route
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
