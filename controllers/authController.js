@@ -1,11 +1,13 @@
 const express = require("express");
-const userModel = require("../models/userModel");
-const connection = require("../utils/db");
+const userModel = require("../models/userModel"); // Import the userModel
+const connection = require("../utils/db"); //import connection?
 const bcrypt = require("bcrypt");
 
 const app = express();
 
 function addUser(data) {
+  // Use userModel.create() for data insertion
+  
   return userModel
     .create(data)
     .then(() => console.log("Saved!"))
@@ -17,26 +19,26 @@ const { validationResult } = require("express-validator");
 exports.signup = async (req, res) => {
   try {
     const { name, pwd } = req.body;
-    const userData = { name: name.toLowerCase(), password: pwd }; // Convert username to lowercase
-    const existingUser = await userModel.findOne({ name: userData.name });
+    const userData = { name, password: pwd };
+    const existingUser = await userModel.findOne({ name });
 
     if (existingUser) {
-      req.flash("error", "Username already taken");
+      req.flash("error", "Username already Taken");
       return res.redirect("/signup");
     }
     if (name.length < 1 || pwd.length < 1) {
-      req.flash("error", "Username or password must be filled!");
+      req.flash("error", "username or password must be filled!");
       return res.redirect("/signup");
     }
 
-    if (pwd.length < 8) {
-      req.flash("error", "Password should have at least 8 characters");
-      return res.redirect("/signup");
+    if(pwd.length  < 8){
+        req.flash('error', 'Password should have at least 8 characters');
+        return res.redirect('/signup') ;
     }
-
+       
     const rounds = 10;
-    const hashedPassword = await bcrypt.hash(pwd, rounds);
-    userData.password = hashedPassword;
+    const hashedpassword = await bcrypt.hash(pwd, rounds);
+    userData.password = hashedpassword;
     console.log("User created:", userData);
     await addUser(userData);
 
@@ -51,7 +53,7 @@ exports.login = async (req, res) => {
   try {
     const { name, pwd } = req.body;
 
-    const existingUser = await userModel.findOne({ name: name.toLowerCase() }); // Convert username to lowercase
+    const existingUser = await userModel.findOne({ name });
 
     if (!existingUser) {
       req.flash("error", "Username not found");
@@ -62,12 +64,12 @@ exports.login = async (req, res) => {
     const isPasswordCorrect = await bcrypt.compare(pwd, existingUser.password);
 
     if (!isPasswordCorrect) {
-      req.flash("error", "Wrong password");
+      req.flash("error", "Wrong Password");
       console.log("Password is wrong");
       return res.redirect("/login");
     }
 
-    console.log("Login success, welcome ", existingUser.name); // Use existingUser.name after fetching from the database
+    console.log("Login success, welcome ", name);
     // ... successful login logic (e.g., create session)
     return res.redirect("/membership");
   } catch (err) {
