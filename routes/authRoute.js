@@ -6,17 +6,23 @@ const flash = require('connect-flash');//conncet flash
 const authController = require('../controllers/authController'); //import authcontroller
 const bcrypt = require('bcrypt'); // Assuming you're using bcrypt for password hashing
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 const app = express()
 app.use(express.json());    
 app.use(express.urlencoded({ extended: false })); 
 
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Flash message middleware
 app.use(flash())
 
-router.post('/signup', authController.signup);
 
-router.post('/login',authController.login);
+
+// Define a login route
+
 
 
 module.exports = router;
