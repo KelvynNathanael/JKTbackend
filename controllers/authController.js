@@ -48,6 +48,43 @@ exports.signup = async (req, res) => {
   }
 };
 
+exports.createUser = async (req, res) => {
+  const { name, password, isAdmin } = req.body;
+
+  // Convert the string value of isAdmin to a Boolean
+  const isAdminValue = isAdmin === 'on';
+  const existingUser = await userModel.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
+    if (existingUser) {
+      req.flash("error", "Username already Taken");
+      return 
+    }
+    if (name.length < 1 || password.length < 1) {
+      req.flash("error", "username or password must be filled!");
+      return
+    }
+    if(password.length  < 8){
+        req.flash('error', 'Password should have at least 8 characters');
+        return
+    }
+
+  const userData = { name, password, isAdmin: isAdminValue };
+
+  const rounds = 10;
+  const hashedpassword = await bcrypt.hash(password, rounds);
+  userData.password = hashedpassword;
+
+  return userModel
+    .create(userData)
+    .then(() => {
+      console.log("User created successfully");
+      res.redirect("/admin");
+    })
+    .catch((err) => {
+      console.error("Error creating user:", err);
+      // Handle error condition, show error message, etc.
+    });
+};
+
 
 //not being used
 exports.login = async (req, res) => {

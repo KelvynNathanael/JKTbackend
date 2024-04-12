@@ -20,7 +20,7 @@ nav{
   width: 90px;
   /* width: 280px; */
   background: #fff;
-  overflow: hidden;
+  
   transition: 1s;
 }
 nav:hover{

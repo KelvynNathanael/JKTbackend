@@ -1,55 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
-    />
-    <link rel="stylesheet" href="css/membership.css" />
-    <title>JKT48 Membership</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="css/membership.css" />
+  <title>JKT48 Membership</title>
+
+  <style>
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
 </head>
+
 <body>
-    <header class="header">
-        <nav>
-            <div class="nav__header">
-                <div class="nav__logo">
-                    <img src="images\JKT48.svg.png" alt="" >
-                </div>
-                <div class="nav__menu__btn" id="menu-btn">
-                    <span><i class="ri-menu-line"></i></span>
-                </div>
-            </div>
-            <ul class="nav__links" id="nav-links">
-                <li class="link"><a href="#home">Home</a></li>
-                <li class="link"><a href="#about">Events</a></li>
-                <li class="link"><a href="#class">Theater</a></li>
-                <li class="link">
-                  <a href="#member">Members</a></li>
-                <li class="link"><a href="#price">Membership</a></li>
-                <li class="link"><button class="btn">Customer Service</button></li>
-            </ul>
-        </nav>
-        <div class="section__container header__container" id="home">
-            <div class="header__image">
-                <img src="images\Member_JKT48_New_Era-removebg-preview.png" alt="" />
-            </div>
-            <div class="header__content">
-                <h4>Exclusive Membership &</h4>
-                <h1 class="section__header">Experience JKT48!</h1>
-                <p>
-                    Be part of the ultimate fan experience with JKT48 Membership. Get access to exclusive events, merchandise, and more!
-                </p>
-                <div class="header__btn">
-                  <a href="/login" class="btn">Join NOW</a>
-                </div>
-            </div>
+  <header class="header">
+    <nav>
+      <div class="nav__header">
+        <div class="nav__logo">
+          <img src="images\JKT48.svg.png" alt="">
         </div>
+        <div class="nav__menu__btn" id="menu-btn">
+          <span><i class="ri-menu-line"></i></span>
+        </div>
+      </div>
+      <ul class="nav__links" id="nav-links">
+        <li class="link"><a href="#home">Home</a></li>
+        <li class="link"><a href="#about">Events</a></li>
+        <li class="link"><a href="#class">Theater</a></li>
+        <li class="link">
+          <a href="#member">Members</a>
+        </li>
+        <li class="link"><a href="#price">Membership</a></li>
+        <li class="link"><a href="#">Customer Service</a></li>
+        <div class="dropdown">
+          <% if (user) { %>
+          <li class="link"><button class="btn"><%= user.name%> <i class="fa fa-caret-down"></i></button></li>
+          <div class="dropdown-content">
+            <a href="/logout">Logout</a>
+          </div>
+          <% } %>
+          <li></li>
+        </div>
+      </ul>
+    </nav>
+    <div class="section__container header__container" id="home">
+      <div class="header__image">
+        <img src="images\Member_JKT48_New_Era-removebg-preview.png" alt="" />
+      </div>
+      <div class="header__content">
+        <h4>Exclusive Membership &</h4>
+        <h1 class="section__header">Experience JKT48!</h1>
+        <p>
+          Be part of the ultimate fan experience with JKT48 Membership. Get access to exclusive events, merchandise, and more!
+        </p>
+        <% if (user) { %>
+        <h4>Hello, <%=user.name %></h4>
+        <% } else { %>
+        <div class="header__btn">
+          <a href="/login" class="btn">Join NOW</a>
+        </div>
+        <% } %>
+      </div>
+    </div>
 
     <section class="section__container about__container" id="about">
       <div class="about__image">
@@ -58,8 +103,8 @@
       <div class="about__content">
         <h2 class="section__header">Our Events</h2>
         <p class="section__description">
-          At JKT48, we pride ourselves on delivering unforgettable experiences through our exciting lineup of events. 
-          From electrifying concerts to intimate fan meet-and-greets, 
+          At JKT48, we pride ourselves on delivering unforgettable experiences through our exciting lineup of events.
+          From electrifying concerts to intimate fan meet-and-greets,
           we offer something for every fan to enjoy and cherish. Here's a glimpse into the thrilling world of JKT48 events.
         </p>
         <div class="about__grid">
@@ -68,8 +113,8 @@
             <div>
               <h4>Concert</h4>
               <p>
-                Step into the spotlight and immerse yourself in the magic of our electrifying concerts. With dazzling performances, 
-                stunning choreography, and infectious energy, our concerts are a feast for the senses that will leave you wanting more. 
+                Step into the spotlight and immerse yourself in the magic of our electrifying concerts. With dazzling performances,
+                stunning choreography, and infectious energy, our concerts are a feast for the senses that will leave you wanting more.
                 Join thousands of fans as we come together to celebrate the music and talent of JKT48.
               </p>
             </div>
@@ -79,7 +124,7 @@
             <div>
               <h4>Special Events & Collaboration</h4>
               <p>
-                Stay tuned for our special events and collaborations, where we team up with other artists, brands, and organizations to bring you unique and exciting experiences. 
+                Stay tuned for our special events and collaborations, where we team up with other artists, brands, and organizations to bring you unique and exciting experiences.
                 From charity concerts to themed parties, there's always something new and exciting happening in the world of JKT48.
               </p>
             </div>
@@ -89,7 +134,7 @@
             <div>
               <h4>Meet & Greet</h4>
               <p>
-                Get up close and personal with your favorite JKT48 members at our exclusive fan meet-and-greets. Whether it's a handshake event, 
+                Get up close and personal with your favorite JKT48 members at our exclusive fan meet-and-greets. Whether it's a handshake event,
                 photo session, or Q&A session, you'll have the chance to interact with your idols, share special moments, and create memories that will last a lifetime.
               </p>
             </div>
@@ -101,8 +146,8 @@
     <section class="section__container class__container" id="class">
       <h2 class="section__header">Theater</h2>
       <p class="section__description">
-        JKT48 Theater is an entertainment center that displays energetic music and dance performances, 
-        supported by talented members of the JKT48 idol group. Strategically located in the center of Jakarta, 
+        JKT48 Theater is an entertainment center that displays energetic music and dance performances,
+        supported by talented members of the JKT48 idol group. Strategically located in the center of Jakarta,
         our theater is a popular destination for music and pop culture fans.
       </p>
       <div class="class__grid">
@@ -148,7 +193,7 @@
     <section class="section__container member__container" id="member">
       <h2 class="section__header">Members</h2>
       <p class="section__description">
-        We are proud to introduce you to our extraordinary lineup of talented and dedicated members who bring joy and inspiration to 
+        We are proud to introduce you to our extraordinary lineup of talented and dedicated members who bring joy and inspiration to
         fans around the world. Each member possesses a unique charm and talent, contributing to the vibrant energy and spirit of our group.
       </p>
       <div class="member__grid">
@@ -172,7 +217,7 @@
           </div>
         </div>
 
-          <div class="member__card">
+        <div class="member__card">
           <img src="images\gracia.png" alt="Member" />
         </div>
         <div class="member__card">
@@ -191,7 +236,7 @@
             </div>
           </div>
         </div>
-          <div class="member__card">
+        <div class="member__card">
           <img src="images\freya.png" alt="Member" />
         </div>
         <div class="member__card">
@@ -216,8 +261,8 @@
     <section class="section__container price__container" id="price">
       <h2 class="section__header">Membership Pricing</h2>
       <p class="section__description">
-        At our JKT48 Membership, we offer flexible pricing plans designed to cater to your individual needs and preferences. 
-        Whether you're a dedicated fan looking for exclusive perks or a casual supporter wanting to stay connected, 
+        At our JKT48 Membership, we offer flexible pricing plans designed to cater to your individual needs and preferences.
+        Whether you're a dedicated fan looking for exclusive perks or a casual supporter wanting to stay connected,
         we have the perfect membership option for you.
       </p>
       <div class="price__grid">
@@ -225,7 +270,7 @@
           <div class="price__content">
             <h4>1 Month</h4>
             <p>
-             IDR 85.000
+              IDR 85.000
             </p>
             <hr />
             <h4>Benefits</h4>
@@ -267,7 +312,7 @@
       </div>
     </section>
 
-   
+
     <footer class="footer">
       <div class="section__container footer__container">
         <div class="footer__col">
@@ -275,7 +320,7 @@
             <a href="#"><img src="images\JKT48.svg.png"></a>
           </div>
           <p>
-            Stay connected with JKT48. From learning more about us to accessing important information, events, and membership options, 
+            Stay connected with JKT48. From learning more about us to accessing important information, events, and membership options,
             it's all just a click away. Connect with us today and be a part of the JKT48 community!
           </p>
           <div class="footer__socials">
@@ -318,5 +363,6 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="js/membership.js"></script>
-  </body>
+</body>
+
 </html>

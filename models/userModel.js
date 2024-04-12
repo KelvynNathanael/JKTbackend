@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const UserData = new mongoose.Schema({
-  name: { type: String, required: true, unique:true },
-  password:{type :String ,required:true},
-  isAdmin:{type :Boolean ,required:true, default:false},
+  name: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  isAdmin: { type: Boolean, required: true, default: false },
+  createdAt: { type: Date, default: Date.now }
 });
+
 const userModel = mongoose.model('users', UserData);
 
-// Export the model for use in other files
 module.exports = userModel;
-
