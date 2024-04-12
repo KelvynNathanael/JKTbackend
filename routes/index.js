@@ -6,14 +6,17 @@ const app = express()
 const router = express.Router();
 app.use(flash())
 
-router.get('/login', (req, res) => {
-  res.render('index', {messages: req.flash()}); 
-});
-router.get('/signup', (req, res) => {
-  res.render('signup', {messages: req.flash() }); 
+router.get('/login', checkNotAuthenticated, (req, res) => {
+  res.render('index', { messages: req.flash() });
 });
 
-router.get('/admin', (req, res) => {
+router.get('/signup', checkNotAuthenticated, (req, res) => {
+  res.render('signup', { messages: req.flash() });
+});
+
+
+router.get('/admin', checkAuthenticated, (req, res) => {
+  // Only accessible to authenticated users
   userModel.find({})
       .then(users => {
           res.render('admin/admin', { users });
@@ -24,22 +27,48 @@ router.get('/admin', (req, res) => {
       });
 });
 
-
-// JSON data view ()
-router.get('/users', async (req, res) => {
-    userModel.find({}).then(function(user){
-        res.json(user)
+router.get('/users', checkAuthenticated, async (req, res) => {
+  // Only accessible to authenticated users
+  userModel.find({})
+      .then(users => {
+          res.json(users);
       })
+      .catch(error => {
+          console.error('Error fetching users:', error);
+          res.status(500).send('Internal Server Error');
+      });
 });
 
-router.get( '/membership' , ( req , res ) =>{
-   res.render( "membership" );
+router.get('/membership', checkAuthenticated, (req, res) => {
+  // Only accessible to authenticated users
+
+  res.render('membership');
 });
 
 router.get( '/' , ( req , res ) =>{
-   res.redirect( "/membership" );
+   res.redirect( "/login" );
 });
 
+// Middleware function to check if the user is authenticated
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+      console.log("checkauth success");
+      return next(); // If authenticated, continue to the next middleware/route handler
+  }
+  
+  console.log("checkauth failed");
+  res.redirect('/login'); // If not authenticated, redirect to the login page
+}
+
+// Middleware function to redirect logged-in users from login and register pages
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+      console.log('checknotauth failed');
+      return res.redirect('/membership'); // Redirect to a different page if logged in
+  }
+  console.log('checknotauth success');
+  next();
+}
 
 
 module.exports = router;

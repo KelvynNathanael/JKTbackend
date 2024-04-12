@@ -20,8 +20,9 @@ exports.signup = async (req, res) => {
   try {
     const { name, pwd } = req.body;
     const userData = { name, password: pwd };
-    const existingUser = await userModel.findOne({ name });
-
+    const existingUser = await userModel.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
+    
+    
     if (existingUser) {
       req.flash("error", "Username already Taken");
       return res.redirect("/signup");
@@ -49,6 +50,8 @@ exports.signup = async (req, res) => {
   }
 };
 
+
+//not being used
 exports.login = async (req, res) => {
   try {
     const { name, pwd } = req.body;
@@ -70,8 +73,8 @@ exports.login = async (req, res) => {
     }
 
     console.log("Login success, welcome ", name);
-    // ... successful login logic (e.g., create session)
     return res.redirect("/membership");
+    
   } catch (err) {
     console.error("Error logging in:", err);
     res.status(500).send("Error logging in");
