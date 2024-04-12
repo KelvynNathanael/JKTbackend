@@ -31,6 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Set route
 app.use('/', require('./routes/route')); // Page route
+app.use('/', require('./routes/crudRoute')); // crud route
+app.use('/', require('./routes/authRoute')); // auth route
 
 initializePassport(passport);
 

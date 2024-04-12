@@ -1,24 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userModel = require("../models/userModel");
-const authController = require("../controllers/authController");
-const passport = require("passport");
-
-// Middleware to check if the user is authenticated
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
-
-// Middleware to redirect logged-in users from login and register pages
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/membership");
-  }
-  next();
-}
+const { checkAuthenticated, checkNotAuthenticated } = require("../middleware/authMiddleware");
 
 // Routes
 router.get("/", (req, res) => {
@@ -36,9 +19,9 @@ router.get("/signup", checkNotAuthenticated, (req, res) => {
 router.get("/admin", checkAuthenticated, async (req, res, next) => {
   try {
     const users = await userModel.find({});
-    res.render("admin/admin", { 
-      users, 
-      messages: req.flash()
+    res.render("admin/admin", {
+      users,
+      messages: req.flash(),
     });
   } catch (error) {
     next(error);
@@ -62,42 +45,6 @@ router.get("/membership", (req, res) => {
     // If not authenticated, render the membership page without user information
     res.render("membership", { user: null });
   }
-});
-
-
-router.post("/signup", authController.signup);
-
-router.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/login",
-  failureFlash: true
-}));
-
-router.post("/admin/delete", async (req, res, next) => {
-  const userId = req.body.userId;
-  try {
-    await userModel.findByIdAndDelete(userId);
-    console.log(`User ${userId.name} deleted`);
-    res.redirect("/admin");
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post("/createUser", authController.createUser);
- 
-
-
-// Define a route to handle logout
-router.get('/logout', (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      console.error('Error logging out:', err);
-      res.status(500).send('Error logging out');
-    } else {
-      res.redirect('/login'); // Redirect the user to the login page after logout
-    }
-  });
 });
 
 router.get("*", (req, res) => {
