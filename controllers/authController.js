@@ -5,9 +5,7 @@ const bcrypt = require("bcrypt");
 
 const app = express();
 
-function addUser(data) {
-  // Use userModel.create() for data insertion
-  
+function addUser(data) {  
   return userModel
     .create(data)
     .then(() => console.log("Saved!"))
