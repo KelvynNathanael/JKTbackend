@@ -7,6 +7,11 @@ const crudController = require("../controllers/crudController");
 
 const router = express.Router();
 
+app.use(express.json());    
+app.use(express.urlencoded({ extended: false })); 
+// Flash message middleware
+app.use(flash());
+
 router.post("/admin/delete", async (req, res, next) => {
   const userId = req.body.userId;
   try {

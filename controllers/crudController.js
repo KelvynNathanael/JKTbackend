@@ -16,16 +16,16 @@ exports.createUser = async (req, res) => {
     const isAdminValue = isAdmin === 'on';
     const existingUser = await userModel.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
       if (existingUser) {
-        req.flash("error", "Username already Taken");
-        return res.redirect("/admin"); 
-      }
-      if (name.length < 1 || password.length < 1) {
-        req.flash("error", "username or password must be filled!");
+        req.session.message = "Username already Taken";
         return res.redirect("/admin");
       }
+      if (name.length < 1 || password.length < 1) {
+        req.session.messages = "username or password must be filled!";
+        return res.redirect("/admin",{messages});
+      }
       if(password.length  < 8){
-          req.flash('error', 'Password should have at least 8 characters');
-          return res.redirect("/admin");
+        req.session.message = "Password should have at least 8 characters";
+        return res.redirect("/admin");
       }
   
     const userData = { name, password, isAdmin: isAdminValue };
@@ -36,6 +36,6 @@ exports.createUser = async (req, res) => {
   
     await addUser(userData);
 
-    res.redirect("admin")
+    res.redirect("/admin")
   };
   
