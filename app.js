@@ -7,7 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const initializePassport = require('./passport-config');
 
-const port = 3000;
+const port = 6969;
 const app = express();
 
 app.use(express.json())//??
@@ -23,7 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// view engine tai kucing
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));

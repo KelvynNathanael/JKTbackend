@@ -16,26 +16,29 @@ router.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("signup", { messages: req.flash() });
 });
 
-router.get("/admin", checkAuthenticated, async (req, res, next) => {
+router.get("/admin", async (req, res, next) => {
   try {
     const users = await userModel.find({});
     res.render("admin/admin", {
       users,
-      messages: req.flash(),
+      messages: null,
     });
   } catch (error) {
     next(error);
   }
 });
 
-router.get("/users", checkAuthenticated, async (req, res, next) => {
+
+//view user in json (gk penting)
+router.get("/users", async (req, res, next) => {
   try {
-    const users = await userModel.find({});
+    const users = await userModel.find({}).sort({ isAdmin: 1 });
     res.json(users);
   } catch (error) {
     next(error);
   }
 });
+
 
 router.get("/membership", (req, res) => {
   if (req.isAuthenticated()) {
