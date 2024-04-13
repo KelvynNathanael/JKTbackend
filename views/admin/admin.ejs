@@ -13,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <style>
     body {
       color: #566787;
@@ -247,6 +248,12 @@
       color: #fff !important;
       border: none !important;
     }
+    button{
+      border: none;
+      background-color: transparent;
+      padding: 0;
+    }
+
   </style>
   <script>
     $(document).ready(function() {
@@ -255,7 +262,7 @@
   </script>
 </head>
 
-<body>
+<body ng-app="">
   <% if (messages) { %>
   <script>
     alert('bjir')
@@ -297,7 +304,7 @@
           <tbody>
             <% users.forEach((user, index) => { %>
             <tr>
-              <td><%= index + 1 %></td> <!-- Use the index of the loop instead of i++ -->
+              <td><%= index + 1 %></td>
               <td><%= user.name %></td>
               <td><%= formatDate(user.createdAt) %></td>
               <td><%= user.isAdmin %></td>
@@ -308,10 +315,9 @@
                     <i class="material-icons">&#xE5C9;</i>
                   </a>
                 </form>
-                <form id="editUserForm<%= user._id %>" action="/admin/edit" method="post">
-                  <input type="hidden" name="userId" value="<%= user._id %>">
-                  <a href="#" class="settings" title="Settings" data-toggle="modal" data-target="#addUserModal"><i class="material-icons">&#xE8B8;</i></a>
-                </form>
+                <a href="#" class="settings" title="Settings" data-toggle="modal" data-target="#editUserModal" onclick="populateEditModal( '<%= user.id %>','<%= user.name %>', '<%= user.password %>','<%= user.isAdmin %>')">
+                  <i class="material-icons">&#xE8B8;</i>
+                </a>
               </td>
             </tr>
             <% }); %>
@@ -321,8 +327,8 @@
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+  <!-- Create Modal -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -339,7 +345,7 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" name="password">
+              <input type="text" class="form-control" id="password" name="password">
             </div>
             <div class="form-group form-check">
               <input type="checkbox" class="form-check-input" id="isAdmin" name="isAdmin">
@@ -355,6 +361,7 @@
     </div>
   </div>
 
+  <!-- Edit Modal -->
   <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -366,20 +373,21 @@
         </div>
         <div class="modal-body">
           <form id="editUserForm" action="/editUser" method="post">
+            <input type="hidden" class="form-control" id="editUserId" name="id" value="">
             <div class="form-group">
               <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" name="name">
+              <input type="text" class="form-control" id="editUserName" name="name" value="">
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" name="password">
+              <input type="password" class="form-control" id="editPassword" name="password" value="">
             </div>
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="isAdmin" name="isAdmin">
+              <input type="checkbox" class="form-check-input" id="editIsAdmin" name="isAdmin" value="">
               <label class="form-check-label" for="isAdmin">Is Admin</label>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Save User</button>
+              <button type="submit" class="btn btn-primary">Update User</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </form>
@@ -395,6 +403,17 @@
   <% return formattedDate; %>
   <% } %>
   <script>
+    function populateEditModal(userId,userName,password, isAdmin) {
+      console.log("taibabianjing");
+      console.log(userName);
+      console.log(password);
+      console.log(isAdmin);
+      document.getElementById('editUserId').value = userId;
+      document.getElementById('editUserName').value = userName;
+      document.getElementById('editPassword').value = password;
+      document.getElementById('editIsAdmin').checked = isAdmin;
+    }
+    
     $(document).ready(function() {
       // Check if there are flash messages with the error class
       if (messages.error) {

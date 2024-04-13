@@ -28,6 +28,8 @@ router.get("/admin", async (req, res, next) => {
   }
 });
 
+
+//view user in json (gk penting)
 router.get("/users", async (req, res, next) => {
   try {
     const users = await userModel.find({}).sort({ isAdmin: 1 });
@@ -36,7 +38,6 @@ router.get("/users", async (req, res, next) => {
     next(error);
   }
 });
-
 
 
 router.get("/membership", (req, res) => {
