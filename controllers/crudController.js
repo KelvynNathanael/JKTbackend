@@ -24,11 +24,12 @@ exports.createUser = async (req, res) => {
 //create user via admin 
 exports.editUser = async (req, res) => {
     const { id, name, password, isAdmin } = req.body;
-  
-    // Convert the string value of isAdmin to a Boolean
     const isAdminValue = isAdmin === 'on';
-  
-    const userData = { name, password, isAdmin: isAdminValue };
+    console.log(name);
+    console.log(password);
+    console.log(isAdminValue);  
+
+    const userData = { name, password, isAdmin:isAdminValue };
 
     try {
       // Update the user data in the database

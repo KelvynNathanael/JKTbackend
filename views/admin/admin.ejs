@@ -248,12 +248,12 @@
       color: #fff !important;
       border: none !important;
     }
-    button{
+
+    button {
       border: none;
       background-color: transparent;
       padding: 0;
     }
-
   </style>
   <script>
     $(document).ready(function() {
@@ -383,8 +383,8 @@
               <input type="password" class="form-control" id="editPassword" name="password" value="">
             </div>
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="editIsAdmin" name="isAdmin" value="">
-              <label class="form-check-label" for="isAdmin">Is Admin</label>
+              <input type="checkbox" class="form-check-input" id="editIsAdmin" name="isAdmin">
+              <label class="form-check-label" for="isAdmin">Admin</label>
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">Update User</button>
@@ -403,17 +403,18 @@
   <% return formattedDate; %>
   <% } %>
   <script>
-    function populateEditModal(userId,userName,password, isAdmin) {
-      console.log("taibabianjing");
-      console.log(userName);
-      console.log(password);
-      console.log(isAdmin);
+    function populateEditModal(userId, userName, password, isAdmin) {
       document.getElementById('editUserId').value = userId;
       document.getElementById('editUserName').value = userName;
       document.getElementById('editPassword').value = password;
-      document.getElementById('editIsAdmin').checked = isAdmin;
+
+      var isAdminCheckbox = document.getElementById('editIsAdmin');
+      //set isAdmin value on edit view
+      var isAdminValue = isAdmin === 'true'; // Convert 'true' to true, 'false' to false bcuz isAdmin is string
+      isAdminCheckbox.checked = isAdminValue;
+
     }
-    
+
     $(document).ready(function() {
       // Check if there are flash messages with the error class
       if (messages.error) {
