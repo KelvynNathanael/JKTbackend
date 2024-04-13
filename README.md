@@ -8,3 +8,7 @@ Gregorio Melvin Karnikov (535220085)
 ```
 $ npm install express
 ```
+or 
+```
+$ npm i express
+```
