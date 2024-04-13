@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Booking</title>
+    <!--Google Fonts and Icons-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/ticketing.css" />
+  </head>
+  <body>
+    <div class="center">
+      <div class="tickets">
+        <div class="ticket-selector">
+          <div class="head">
+            <div class="title">Theater Seats</div>
+          </div>
+          <div class="seats">
+            <div class="status">
+              <div class="item">Available</div>
+              <div class="item">Booked</div>
+              <div class="item">Selected</div>
+            </div>
+            <div class="all-seats">
+              <input type="checkbox" name="tickets" id="s1" />
+              <label for="s1" class="seat booked"></label>
+            </div>
+          </div>
+        <div class="price">
+          <div class="total">
+            <span> <span class="count">0</span> Tickets </span>
+            <div class="amount">0</div>
+          </div>
+          <button type="button">Book</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      let seats = document.querySelector(".all-seats");
+      for (var i = 0; i < 59; i++) {
+        let randint = Math.floor(Math.random() * 2);
+        let booked = randint === 1 ? "booked" : "";
+        seats.insertAdjacentHTML(
+          "beforeend",
+          '<input type="checkbox" name="tickets" id="s' +
+            (i + 2) +
+            '" /><label for="s' +
+            (i + 2) +
+            '" class="seat ' +
+            booked +
+            '"></label>'
+        );
+      }
+
+      let tickets = seats.querySelectorAll("input");
+      tickets.forEach((ticket) => {
+        ticket.addEventListener("change", () => {
+          let amount = document.querySelector(".amount").innerHTML;
+          let count = document.querySelector(".count").innerHTML;
+          amount = Number(amount);
+          count = Number(count);
+
+          if (ticket.checked) {
+            count += 1;
+            amount += 200000;
+          } else {
+            count -= 1;
+            amount -= 200000;
+          }
+          document.querySelector(".amount").innerHTML = amount;
+          document.querySelector(".count").innerHTML = count;
+        });
+      });
+    </script>
+  </body>
+</html>
