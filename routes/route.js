@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userModel = require("../models/userModel");
-const { checkAuthenticated, checkNotAuthenticated } = require("../middleware/authMiddleware");
+const { checkAuthenticated, checkNotAuthenticated,checkAdmin } = require("../middleware/authMiddleware");
 
 // Routes
 router.get("/", (req, res) => {
@@ -16,28 +16,46 @@ router.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("signup", { messages: req.flash() });
 });
 
-router.get("/admin", async (req, res, next) => {
+router.get("/contact", checkAuthenticated, (req, res) => {
+  res.render("contact");
+});
+
+
+router.get("/admin", checkAuthenticated, checkAdmin,async (req, res, next) => {
   try {
     const users = await userModel.find({});
     res.render("admin/admin", {
       users,
       messages: null,
+      user:req.user,
     });
   } catch (error) {
-    next(error);
+    next(error); 
   }
 });
 
-
 //view user in json (gk penting)
-router.get("/users", async (req, res, next) => {
+router.get("/users",checkAuthenticated, checkAdmin, async (req, res, next) => {
   try {
-    const users = await userModel.find({}).sort({ isAdmin: 1 });
+    const users = await userModel.find({});
     res.json(users);
   } catch (error) {
     next(error);
   }
 });
+
+// Define a route to handle logout
+router.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error("Error logging out:", err);
+      res.status(500).send("Error logging out");
+    } else {
+      res.redirect("/login"); // Redirect the user to the login page after logout
+    }
+  });
+});
+// Define a login route
 
 
 router.get("/membership", (req, res) => {

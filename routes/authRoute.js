@@ -18,23 +18,19 @@ router.post("/signup", authController.signup);
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/",
     failureRedirect: "/login",
     failureFlash: true,
-  })
+  }),
+  function(req, res) {
+    if (req.user.isAdmin) {
+      res.redirect("/admin");
+    } else {
+      res.redirect("/");
+    }
+  }
 );
 
-// Define a route to handle logout
-router.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      console.error("Error logging out:", err);
-      res.status(500).send("Error logging out");
-    } else {
-      res.redirect("/login"); // Redirect the user to the login page after logout
-    }
-  });
-});
-// Define a login route
+
+
 
 module.exports = router;

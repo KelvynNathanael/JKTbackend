@@ -14,6 +14,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     body {
       color: #566787;
@@ -254,6 +255,23 @@
       background-color: transparent;
       padding: 0;
     }
+
+    .sidebar .navigation{
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .sidebar .navigation a{
+      display: flex;
+      color: white;
+      background-color: transparent;
+      text-decoration: none;
+      padding-top: 0.7rem;
+      margin-right: 0.9em;
+    }
+    .sidebar .navigation a i{
+      translate: 50%;
+    }
   </style>
   <script>
     $(document).ready(function() {
@@ -271,7 +289,13 @@
 
   <div class="container-xl">
     <div class="sidebar">
-      <h2>Table Management</h2>
+      <div class="navigation">
+        <h2>Table Management</h2>
+        <a href="/logout">
+          <h3 >Logout</h3><i style="font-size: 32px;" class="fa fa-sign-out"></i>
+        </a>
+      </div>
+      
       <a href="#" class="btn btn-secondary"> <span>Users Table</span></a>
       <a href="#" class="btn btn-secondary"> <span>Talent Table</span></a>
       <a href="#" class="btn btn-secondary"> <span>Payment Table</span></a>

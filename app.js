@@ -7,7 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const initializePassport = require('./passport-config');
 
-const port = 6969;
+const port = 3000;
 const app = express();
 
 app.use(express.json())//??
@@ -37,6 +37,6 @@ app.use('/', require('./routes/authRoute')); // auth route
 initializePassport(passport);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`);
+  console.log(`App listening on port http://localhost:${port}`);
 });
 
