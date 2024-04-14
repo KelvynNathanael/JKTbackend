@@ -55,7 +55,6 @@ router.get("/logout", (req, res) => {
     }
   });
 });
-// Define a login route
 
 
 router.get("/membership", (req, res) => {

@@ -7,7 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const initializePassport = require('./passport-config');
 
-const port = 3000;
+const port = 6969;
 const app = express();
 
 app.use(express.json())//??
