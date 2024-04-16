@@ -12,15 +12,14 @@ function addUser(data) {
     .catch((err) => console.error("Error creating user:", err));
 }
 
-const { validationResult } = require("express-validator");
-
 exports.signup = async (req, res) => {
   try {
     const { name, pwd } = req.body;
     const userData = { name, password: pwd };
+    // Check if a user with the same name already exists (case-insensitive)
     const existingUser = await userModel.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
-    
-    
+     
+
     if (existingUser) {
       req.flash("error", "Username already Taken");
       return res.redirect("/signup");
@@ -29,7 +28,6 @@ exports.signup = async (req, res) => {
       req.flash("error", "username or password must be filled!");
       return res.redirect("/signup");
     }
-
     if(pwd.length  < 8){
         req.flash('error', 'Password should have at least 8 characters');
         return res.redirect('/signup') ;

@@ -20,7 +20,6 @@ router.get("/contact", checkAuthenticated, (req, res) => {
   res.render("contact");
 });
 
-
 router.get("/admin", checkAuthenticated, checkAdmin,async (req, res, next) => {
   try {
     const users = await userModel.find({});
@@ -44,7 +43,8 @@ router.get("/users",checkAuthenticated, checkAdmin, async (req, res, next) => {
   }
 });
 
-// Define a route to handle logout
+
+//logout
 router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {

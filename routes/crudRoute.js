@@ -9,11 +9,10 @@ const router = express.Router();
 
 app.use(express.json());    
 app.use(express.urlencoded({ extended: false })); 
-// Flash message middleware
 app.use(flash());
 
 
-//delete
+//delete by id
 router.post("/admin/delete", async (req, res, next) => {
   const userId = req.body.userId;
   try {
@@ -26,7 +25,7 @@ router.post("/admin/delete", async (req, res, next) => {
 });
 
 
-router.post("/createUser", crudController.createUser);
+router.post("/createUser", crudController.createUser);//logic in controller
 
 router.post("/editUser",crudController.editUser);
 

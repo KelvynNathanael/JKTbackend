@@ -12,19 +12,19 @@ function addUser(data) {
 exports.createUser = async (req, res) => {
     const { name, password, isAdmin } = req.body;
   
-    // Convert the string value of isAdmin to a Boolean
+    // Convert to a Boolean, bcuz isAdmin is string
     const isAdminValue = isAdmin === 'on';
-  
-    const userData = { name, password, isAdmin: isAdminValue };
-  
-    await addUser(userData);
 
+    const userData = { name, password, isAdmin: isAdminValue };
+    await addUser(userData);
     res.redirect("/admin")
   };
 //create user via admin 
 exports.editUser = async (req, res) => {
     const { id, name, password, isAdmin } = req.body;
     const isAdminValue = isAdmin === 'on';
+    
+    //test if data was fetched
     console.log(name);
     console.log(password);
     console.log(isAdminValue);  

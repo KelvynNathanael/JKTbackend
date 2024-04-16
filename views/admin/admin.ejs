@@ -256,12 +256,12 @@
       padding: 0;
     }
 
-    .sidebar .navigation{
+    .sidebar .navigation {
       display: flex;
       justify-content: space-between;
     }
 
-    .sidebar .navigation a{
+    .sidebar .navigation a {
       display: flex;
       color: white;
       background-color: transparent;
@@ -269,7 +269,8 @@
       padding-top: 0.7rem;
       margin-right: 0.9em;
     }
-    .sidebar .navigation a i{
+
+    .sidebar .navigation a i {
       translate: 50%;
     }
   </style>
@@ -280,22 +281,16 @@
   </script>
 </head>
 
-<body ng-app="">
-  <% if (messages) { %>
-  <script>
-    alert('bjir')
-  </script>
-  <% } %>
-
+<body>
   <div class="container-xl">
     <div class="sidebar">
       <div class="navigation">
         <h2>Table Management</h2>
         <a href="/logout">
-          <h3 >Logout</h3><i style="font-size: 32px;" class="fa fa-sign-out"></i>
+          <h3>Logout</h3><i style="font-size: 32px;" class="fa fa-sign-out"></i>
         </a>
       </div>
-      
+
       <a href="#" class="btn btn-secondary"> <span>Users Table</span></a>
       <a href="#" class="btn btn-secondary"> <span>Talent Table</span></a>
       <a href="#" class="btn btn-secondary"> <span>Payment Table</span></a>
