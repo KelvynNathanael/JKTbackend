@@ -1,7 +1,7 @@
 //database connection
 const mongoose = require('mongoose');
 
-const connectionString = 'mongodb://127.0.0.1:27017/Test'; 
+const connectionString = 'mongodb://127.0.0.1:27017/JKT'; 
 
 mongoose.connect(connectionString)
 .then(() => console.log('Connected to MongoDB!'))
