@@ -8,7 +8,7 @@ function checkAdmin(req, res, next) {
     return next();
   }
   // If the user is not authenticated as an admin, redirect them to a different page (e.g., the main page or login page)
-  res.redirect("/"); // You can change the redirect location based on your application's logic
+  res.redirect("/login"); // You can change the redirect location based on your application's logic
 }
 
 function checkAuthenticated(req, res, next) {
@@ -22,7 +22,7 @@ function checkAuthenticated(req, res, next) {
   function checkNotAuthenticated(req, res, next) {
     console.log(req.isAuthenticated);
     if (req.isAuthenticated()) {
-      return res.redirect("/membership");
+      return res.redirect("/");
     }
     next();
   }

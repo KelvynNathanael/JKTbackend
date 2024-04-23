@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const userModel = require("../models/userModel");
+const {verifyToken} = require('../passport-config');
+const jwt = require('jsonwebtoken');
 const { checkAuthenticated, checkNotAuthenticated,checkAdmin } = require("../middleware/authMiddleware");
 
 // Routes
@@ -16,11 +18,11 @@ router.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("signup", { messages: req.flash() });
 });
 
-router.get("/contact", checkAuthenticated, (req, res) => {
+router.get("/contact", verifyToken, (req, res) => {
   res.render("contact");
 });
 
-router.get("/admin", checkAuthenticated, checkAdmin,async (req, res, next) => {
+router.get("/admin", checkAdmin,verifyToken,async (req, res, next) => {
   try {
     const users = await userModel.find({});
     res.render("admin/admin", {
@@ -34,7 +36,7 @@ router.get("/admin", checkAuthenticated, checkAdmin,async (req, res, next) => {
 });
 
 //view user in json (gk penting)
-router.get("/users",checkAuthenticated, checkAdmin, async (req, res, next) => {
+router.get("/users",verifyToken, checkAdmin, async (req, res, next) => {
   try {
     const users = await userModel.find({});
     res.json(users);
@@ -45,27 +47,22 @@ router.get("/users",checkAuthenticated, checkAdmin, async (req, res, next) => {
 
 
 //logout
-router.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      console.error("Error logging out:", err);
-      res.status(500).send("Error logging out");
-    } else {
-      res.redirect("/login"); // Redirect the user to the login page after logout
-    }
+router.get('/logout', (req, res) => {
+  req.logout(() => {
+      req.session.destroy(() => {
+        res.clearCookie('jwt');
+          req.app.locals.isLoggedIn = false; // Set isLoggedIn to false in application locals
+          res.redirect('/'); // Redirect to the homepage after logout
+      });
   });
 });
 
 
-router.get("/membership", (req, res) => {
-  if (req.isAuthenticated()) {
+router.get("/membership", verifyToken,(req, res) => {
     // If authenticated, render the membership page and pass user information to the view
     res.render("membership", { user: req.user });
-  } else {
-    // If not authenticated, render the membership page without user information
-    res.render("membership", { user: null });
-  }
 });
+
 
 router.get("*", (req, res) => {
   res.redirect("/membership"); // Redirect to the "membership" template
