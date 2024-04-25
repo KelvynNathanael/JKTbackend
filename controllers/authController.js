@@ -1,6 +1,6 @@
 const express = require("express");
 const userModel = require("../models/userModel"); // Import the userModel
-const connection = require("../utils/db"); //import connection?
+const connection = require("../utils/db"); //import connection
 const bcrypt = require("bcrypt");
 
 const app = express();
@@ -16,7 +16,7 @@ exports.signup = async (req, res) => {
   try {
     const { name, pwd } = req.body;
     const userData = { name, password: pwd };
-    // Check if a user with the same name already exists (case-insensitive)
+    // Check jika user dengan nama yang sama sudah ada (case-insensitive)
     const existingUser = await userModel.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
      
 
@@ -48,7 +48,7 @@ exports.signup = async (req, res) => {
 
 
 
-//not being used
+//gk pake
 exports.login = async (req, res) => {
   try {
     const { name, pwd } = req.body;

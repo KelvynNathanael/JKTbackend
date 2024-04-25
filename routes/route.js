@@ -34,6 +34,18 @@ router.get("/admin", checkAdmin,verifyToken,async (req, res, next) => {
     next(error); 
   }
 });
+router.get("/admin2", checkAdmin,verifyToken,async (req, res, next) => {
+  try {
+    const users = await userModel.find({});
+    res.render("admin/adminTheater", {
+      users,
+      messages: null,
+      user:req.user,
+    });
+  } catch (error) {
+    next(error); 
+  }
+});
 
 //view user in json (gk penting)
 router.get("/users",verifyToken, checkAdmin, async (req, res, next) => {
