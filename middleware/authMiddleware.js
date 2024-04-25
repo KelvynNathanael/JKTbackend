@@ -1,14 +1,12 @@
-// Middleware to check if the user is authenticated
 const passport = require("passport");
 
 function checkAdmin(req, res, next) {
-  // Check if the user is authenticated and is an admin
+  // Cek jika sudah login dan adalah admin
   if (req.isAuthenticated() && req.user.isAdmin) {
-    // If the user is authenticated as an admin, allow them to proceed
     return next();
   }
-  // If the user is not authenticated as an admin, redirect them to a different page (e.g., the main page or login page)
-  res.redirect("/login"); // You can change the redirect location based on your application's logic
+  // jika user bukan admin maka akan di arahkan ke login, jika sudah login dan bukan admin akan ke halaman membership
+  res.redirect("/login");
 }
 
 function checkAuthenticated(req, res, next) {
@@ -18,7 +16,7 @@ function checkAuthenticated(req, res, next) {
     res.redirect("/login");
   }
   
-  // Middleware to redirect logged-in users from login and register pages
+  // Middleware untuk redirect user ke halaman utama jika sudah login
   function checkNotAuthenticated(req, res, next) {
     console.log(req.isAuthenticated);
     if (req.isAuthenticated()) {

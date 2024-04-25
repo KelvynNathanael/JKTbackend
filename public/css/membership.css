@@ -643,4 +643,15 @@ nav {
   .price__card {
     padding: 2rem;
   }
+
+  .class__grid .class__card .class__content p{
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .class__grid .class__card .class__content .time{
+    
+  }
+  .class__grid .class__card .class__content {
+    text-align: center;
+  }
 }

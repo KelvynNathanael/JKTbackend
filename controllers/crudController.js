@@ -23,12 +23,6 @@ exports.createUser = async (req, res) => {
 exports.editUser = async (req, res) => {
     const { id, name, password, isAdmin } = req.body;
     const isAdminValue = isAdmin === 'on';
-    
-    //test if data was fetched
-    console.log(name);
-    console.log(password);
-    console.log(isAdminValue);  
-
     const userData = { name, password, isAdmin:isAdminValue };
 
     try {

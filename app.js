@@ -26,11 +26,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-initialize( // Menginisialisasi Passport.js
+initialize( // Menginisialisasi Passport-config.js
   passport, // Objek Passport.js
   async (name) => userModel.findOne({
-    name: { $regex: new RegExp(`^${name}$`, "i") },}), // Fungsi untuk mendapatkan pengguna berdasarkan email
-  async (id) => await userModel.findById(id) // Fungsi untuk mendapatkan pengguna berdasarkan ID
+    name: { $regex: new RegExp(`^${name}$`, "i") },}), 
+  async (id) => await userModel.findById(id) 
 );
 
 app.set('view engine', 'ejs');
