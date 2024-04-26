@@ -33,7 +33,7 @@ initialize( // Menginisialisasi Passport.js
   async (id) => await userModel.findById(id) // Fungsi untuk mendapatkan pengguna berdasarkan ID
 );
 
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');  
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 

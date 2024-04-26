@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const userModel = require("../models/userModel");
-const {verifyToken} = require('../passport-config');
 const jwt = require('jsonwebtoken');
-const { checkAuthenticated, checkNotAuthenticated,checkAdmin } = require("../middleware/authMiddleware");
+const { verifyToken, checkNotAuthenticated,checkAdmin } = require("../middleware/authMiddleware");
 
 // Routes
 router.get("/", (req, res) => {

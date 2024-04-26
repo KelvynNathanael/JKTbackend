@@ -49,39 +49,7 @@ async function initialize(passport, getUserByUsername, getUserById) {
   });
 }
 
-function verifyToken(req, res, next) {
-  const token = req.cookies.jwt;
-  if (!token) {
-    return res.render("membership",{user:null})
-  }
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
-    if (err) {
-      if (err.name === "TokenExpiredError") {
-        console.log('pls');
-        res.clearCookie("jwt");
-        return res.redirect("/logout");
-      } else {
-        // Invalid token, redirect to login
-        return res.redirect("/login");
-      }
-    }
-
-    try {
-      const user = await userModel.findById(decoded._id);
-      if (!user) {
-        // User not found, clear the cookie and redirect to login
-        res.clearCookie("jwt");
-        return res.redirect("/");
-      }
-      req.user = user;
-      next();
-    } catch (error) { 
-      console.error(error);
-      res.status(500).send("Internal Server Error");
-    }
-  });
-}
 
 
-module.exports = { initialize, generateToken, verifyToken };
+
+module.exports = { initialize, generateToken };
