@@ -1,4 +1,6 @@
 const passport = require("passport");
+const userModel = require("../models/userModel"); // Import the userModel
+const jwt = require("jsonwebtoken");
 
 function checkAdmin(req, res, next) {
   // Cek jika sudah login dan adalah admin
