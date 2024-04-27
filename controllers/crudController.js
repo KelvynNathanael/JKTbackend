@@ -1,7 +1,8 @@
 const multer = require('multer');
 const path = require('path');
 const userModel = require("../models/userModel"); // Import the userModel
-const TheaterData = require("../models/userModel"); // Import the userModel
+const TheaterData = require("../models/theaterModel"); // Import the userModel
+
 
 function addUser(data) {
   return userModel
@@ -43,7 +44,6 @@ exports.editUser = async (req, res) => {
     res.status(500).send("Error updating user");
   }
 };
-
 // Set storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -60,23 +60,32 @@ const storage = multer.diskStorage({
 // Init Upload
 const upload = multer({
   storage: storage,
-}).single("file");
+}).single("image");
 
 exports.createTheater = async (req, res) => {
-  const { title, description, startAt, image} = req.body;
-  console.log(title);
-  console.log(description);
-  console.log(startAt);
-  console.log(image);
-  upload(req, res, (err) => {
+  // if (title) {
+    //   const theaters = await TheaterData.find({});
+    //   return res.render("admin/adminTheater",{theaters,messages:"Please fill the form"})
+  // }
+  upload(req, res, async (err) => {
     if (err) {
       console.error(err);
       res.status(500).send("Error uploading file");
     } else { 
+      // File uploaded successfully
+      const { title, description, startAt } = req.body;
+      console.log(title);
+      console.log(description);
+      console.log(startAt);
+      console.log(req.file); // This will contain information about the uploaded file
       console.log('success');
+      const filePath = path.normalize(req.file.path);
+      const relativePath = path.relative(path.join('public'), filePath);
+      console.log('File uploaded successfully:', relativePath);
+      const theaterData = {title, description, startAt,image:relativePath}
+      await addTheater(theaterData);
       res.redirect("/admin2");
     }
   });
-  
-
 };
+

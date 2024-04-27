@@ -276,13 +276,20 @@
     }
   </style>
   <script>
+    // Ensure jQuery is loaded before using it
     $(document).ready(function() {
+      // Call tooltip function after document is ready
       $('[data-toggle="tooltip"]').tooltip();
     });
   </script>
 </head>
-
 <body>
+  <script>
+    var messages = "<%= messages %>";
+    if( messages ){
+      alert( messages);
+    }
+  </script>
   <div class="container-xl">
     <div class="sidebar">
       <div class="navigation">
@@ -323,25 +330,24 @@
             </tr>
           </thead>
           <tbody>
-            <% users.forEach((user, index) => { %>
+            <% theaters.forEach((theater, index) => { %>
             <tr>
               <td><%= index + 1 %></td>
-              <td><%= user.name %></td>
-              <td><%= formatDate(user.createdAt) %></td>
-              <td><%= user.isAdmin %></td>
-              <td><img src="images/demi.jpg" alt=""></td>
+              <td><%= theater.title %></td>
+              <td><%= theater.description %></td>
+              <td><%= formatDate(theater.startAt) %></td>
+              <td><img src="<%= theater.image  %>" alt=""></td>
               <td>
-                <form id="deleteUserForm_<%= user._id %>" action="/admin/delete" method="post" onsubmit="return confirmDelete('<%= user._id %>')">
-                  <input type="hidden" name="userId" value="<%= user._id %>">
-                  <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="if (confirmDelete()) { document.getElementById('deleteUserForm_<%= user._id %>').submit(); }">
+                <form id="deleteTheaterForm_<%= theater._id %>" action="/admin/Theater" method="post" onsubmit="return confirmDelete('<%= theater._id %>')">
+                  <input type="hidden" name="theaterId" value="<%= theater._id %>">
+                  <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="if (confirmDelete()) { document.getElementById('deleteUserForm_<%= theater._id %>').submit(); }">
                     <i class="material-icons">&#xE5C9;</i>
                   </a>
                 </form>
-                <a href="#" class="settings" title="Settings" data-toggle="modal" data-target="#editUserModal" onclick="populateEditModal( '<%= user.id %>','<%= user.name %>', '<%= user.password %>','<%= user.isAdmin %>')">
+                <a href="#" class="settings" title="Settings" data-toggle="modal" data-target="#editTheaterModal" onclick="populateEditModal( '<%= theater.id %>','<%= theater.name %>', '<%= theater.password %>','<%= theater.isAdmin %>')">
                   <i class="material-icons">&#xE8B8;</i>
                 </a>
               </td>
-              
             </tr>
             <% }); %>
           </tbody>
@@ -361,7 +367,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form id="addUserForm" action="/createTheater" method="post" >
+          <form id="addUserForm" action="/createTheater" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label for="title">Title</label>
               <input type="text" class="form-control" id="title" name="title">

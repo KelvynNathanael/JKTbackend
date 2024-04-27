@@ -1,8 +1,10 @@
 const express = require("express");
+const multer = require('multer');
 const userModel = require("../models/userModel"); // Import the userModel
 const flash = require("connect-flash"); //connect flash
 const app = express();
 const authController = require("../controllers/authController");
+const upload = multer({ dest: 'uploads/' });
 const crudController = require("../controllers/crudController");
 
 const router = express.Router();
@@ -31,7 +33,7 @@ router.post("/createUser", crudController.createUser);//logic in controller
 
 router.post("/editUser",crudController.editUser);
 
-router.post("/createTheater",crudController.createTheater);
+router.post("/createTheater" ,crudController.createTheater);
 
 
 
