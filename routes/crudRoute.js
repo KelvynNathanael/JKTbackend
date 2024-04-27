@@ -12,6 +12,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(flash());
 
 
+
+
 //delete by id
 router.post("/admin/delete", async (req, res, next) => {
   const userId = req.body.userId;
@@ -28,5 +30,10 @@ router.post("/admin/delete", async (req, res, next) => {
 router.post("/createUser", crudController.createUser);//logic in controller
 
 router.post("/editUser",crudController.editUser);
+
+router.post("/createTheater",crudController.createTheater);
+
+
+
 
 module.exports = router;
