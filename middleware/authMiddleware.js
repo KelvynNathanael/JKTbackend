@@ -1,21 +1,25 @@
-
+const TheaterData = require("../models/theaterModel"); // Import the userModel
 const userModel = require("../models/userModel"); // Import the userModel
 const jwt = require("jsonwebtoken");
 
 
-function checkAdmin(req, res, next) {
-  // Cek jika sudah login dan adalah admin
-  if (req.isAuthenticated() && req.user.isAdmin) {
+function checkAdmin(req, res, next,err) {
+  if (err) {
+    res.redirect("/")
+  }
+  // Cek jika adalah admin
+  if (req.user.isAdmin) {
     return next();
   }
   // jika user bukan admin maka akan di arahkan ke login, jika sudah login dan bukan admin akan ke halaman membership
   res.redirect("/login");
 }
 
-function verifyToken(req, res, next) {
+async function verifyToken(req, res, next) {
   const token = req.cookies.jwt;
   if (!token) {
-    return res.render("membership",{user:null})
+    const theaters = await TheaterData.find({}); 
+    return res.render("membership",{user:null,theaters})
   }
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
@@ -48,8 +52,9 @@ function verifyToken(req, res, next) {
   
   // Middleware untuk redirect user ke halaman utama jika sudah login
   function checkNotAuthenticated(req, res, next) {
+    const token = req.cookies.jwt;
     console.log(req.isAuthenticated);
-    if (req.isAuthenticated()) {
+    if (token) {
       return res.redirect("/");
     }
     next();
