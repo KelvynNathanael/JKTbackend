@@ -1,4 +1,4 @@
-
+const TheaterData = require("../models/theaterModel"); // Import the userModel
 const userModel = require("../models/userModel"); // Import the userModel
 const jwt = require("jsonwebtoken");
 
@@ -15,10 +15,11 @@ function checkAdmin(req, res, next,err) {
   res.redirect("/login");
 }
 
-function verifyToken(req, res, next) {
+async function verifyToken(req, res, next) {
   const token = req.cookies.jwt;
   if (!token) {
-    return res.render("membership",{user:null})
+    const theaters = await TheaterData.find({}); 
+    return res.render("membership",{user:null,theaters})
   }
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {

@@ -71,7 +71,7 @@ router.get('/logout', (req, res) => {
 router.get("/membership", verifyToken,async(req, res) => {
     // If authenticated, render the membership page and pass user information to the view
     const theaters = await TheaterData.find({});
-    res.render("membership", { user: req.user,theaters });
+    res.render("membership", { theaters,user: req.user });
 });
 
 
