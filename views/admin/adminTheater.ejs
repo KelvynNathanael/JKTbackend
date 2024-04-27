@@ -338,7 +338,7 @@
               <td><%= formatDate(theater.startAt) %></td>
               <td><img src="<%= theater.image  %>" alt=""></td>
               <td>
-                <form id="deleteTheaterForm_<%= theater._id %>" action="/admin/Theater" method="post" onsubmit="return confirmDelete('<%= theater._id %>')">
+                <form id="editUserModal<%= theater._id %>" action="/admin/Theater" method="post" onsubmit="return confirmDelete('<%= theater._id %>')">
                   <input type="hidden" name="theaterId" value="<%= theater._id %>">
                   <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="if (confirmDelete()) { document.getElementById('deleteUserForm_<%= theater._id %>').submit(); }">
                     <i class="material-icons">&#xE5C9;</i>
@@ -385,7 +385,7 @@
               <label class="form-check-label" for="image"></label>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Save User</button>
+              <button type="submit" class="btn btn-primary">Save Theater</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </form>
