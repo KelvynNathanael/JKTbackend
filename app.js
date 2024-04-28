@@ -41,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', require('./routes/route')); // Page route
 app.use('/', require('./routes/crudRoute')); // crud route
 app.use('/', require('./routes/authRoute')); // auth route
+app.use('/', require('./routes/userRoute')); // user route
 
 
 app.listen(port, () => {

@@ -5,13 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JKT48 Sign Up</title>
     <link rel="stylesheet" href="css/login.css">
+
+    <script>
+        function togglePasswordVisibility() {
+          const passwordInput = document.getElementById('password');
+          const checkBox = document.getElementById('showPassword');
+          
+          if (checkBox.checked) {
+            passwordInput.type = 'text';
+          } else {
+            passwordInput.type = 'password';
+          }
+        }
+      </script>
+
+      <style>
+        button{
+            margin-top: 1rem;
+        }
+      </style>
 </head>
 <body>
     <div class="container">
         <form class="signup-form" action="/signup" method="post">
             <h2>Sign Up | JKT-48</h2>
             <input type="text" placeholder="Username" required     name ="name">
-            <input type="password" placeholder="Password" required name="pwd">
+            <input type="password" placeholder="Password" required name="pwd" id="password">
+            <label for="showPassword" class="show">
+                <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> Show Password
+              </label>
             <button type="submit">Sign Up</button><br>
             <% if (messages.error) { %>
                 <p class="error">

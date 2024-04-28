@@ -53,11 +53,10 @@ async function verifyToken(req, res, next) {
   // Middleware untuk redirect user ke halaman utama jika sudah login
   function checkNotAuthenticated(req, res, next) {
     const token = req.cookies.jwt;
-    console.log(req.isAuthenticated);
-    if (token) {
-      return res.redirect("/");
+    if (!token) {
+      next();
     }
-    next();
+    return res.redirect("/");
   }
   
   module.exports = { verifyToken, checkNotAuthenticated, checkAdmin};

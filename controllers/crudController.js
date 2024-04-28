@@ -2,7 +2,7 @@ const multer = require("multer");
 const path = require("path");
 const userModel = require("../models/userModel"); // Import the userModel
 const TheaterData = require("../models/theaterModel"); // Import the userModel
-const fs = require('fs');
+const fs = require("fs");
 
 function addUser(data) {
   return userModel
@@ -81,7 +81,7 @@ exports.createTheater = async (req, res) => {
       console.log(title);
       console.log(description);
       console.log(startAt);
-      console.log(req.file); 
+      console.log(req.file);
       console.log("success");
       const filePath = path.normalize(req.file.path);
       const relativePath = path.relative(path.join("public"), filePath);
@@ -97,36 +97,41 @@ exports.createTheater = async (req, res) => {
 exports.editTheater = async (req, res) => {
   try {
     upload(req, res, async (err) => {
-      const {id, title, description, startAt} = req.body;
+      const { id, title, description, startAt } = req.body;
       const theater = await TheaterData.findById(id);
-      // Delete the image file
-      if (req.file) {
-        const imagePath = path.join( 'public', theater.image);
-        fs.unlinkSync(imagePath);
+
+      if (!title || !description || !startAt) {
+        const theaters = await TheaterData.find({});
+        return res.render("admin/adminTheater", {
+          theaters,
+          messages: "Please fill the form",
+        });
       }
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error uploading file");
-      } else {
-        if (!title || !description || !startAt) {
-          const theaters = await TheaterData.find({});
-          return res.render("admin/adminTheater", {
-            theaters,
-            messages: "Please fill the form",
-          });
-        }
-        if (req.file) {
-          const filePath = path.normalize(req.file.path);
+      // Delete the image file if input file and input new file
+      if (req.file) {
+        const imagePath = path.join("public", theater.image);
+        fs.unlinkSync(imagePath);
+        const filePath = path.normalize(req.file.path);
         const relativePath = path.relative(path.join("public"), filePath);
         console.log("File uploaded successfully:", relativePath);
-        const theaterData = { title, description, startAt, image: relativePath };
-        await TheaterData.findByIdAndUpdate(id,theaterData);
+        const theaterData = {
+          title,
+          description,
+          startAt,
+          image: relativePath,
+        };
+        await TheaterData.findByIdAndUpdate(id, theaterData);
         res.redirect("/admin2");
-        }
-        const theaterData = { title, description, startAt, image:theater.image};
-          await TheaterData.findByIdAndUpdate(id,theaterData);
-          res.redirect("/admin2");
       }
+      //if no file inputted  keep old image
+      const theaterData = {
+        title,
+        description,
+        startAt,
+        image: theater.image,
+      };
+      await TheaterData.findByIdAndUpdate(id, theaterData);
+      res.redirect("/admin2");
     });
   } catch (err) {
     console.error("Error", err);

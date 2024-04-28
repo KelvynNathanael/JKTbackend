@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JKT48 Login</title>
-    <link rel="stylesheet" href="css/login.css">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JKT48 Login</title>
+  <link rel="stylesheet" href="css/login.css">
+  
+  <script>
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const checkBox = document.getElementById('showPassword');
+      
+      if (checkBox.checked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    }
+  </script>
+
+  <style>
+    button{
+        margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <form class="login-form" action="/login" method="post">
-            <h2>Log in | JKT-48</h2>
-            <input type="text" placeholder="Username" required name ="name">
-            <input type="password" placeholder="Password" required name ="pwd">
-            <% if (messages.error) { %>
-                <p class="error">
-                    <%= messages.error %>
-                </p>
-            <% } %>
-            <button type="submit">Login</button>
-            <p>Don't have an account? <a href="/signup">Sign up</a></p>
-        </form>
-    </div>
+  <div class="container">
+    <form class="login-form" action="/login" method="post">
+      <h2>Log in | JKT-48</h2>
+      <input type="text" placeholder="Username" required name="name">
+      <div class="password-container">
+        <input type="password" id="password" placeholder="Password" required name="pwd">
+        <label for="showPassword" class="show">
+          <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> Show Password
+        </label>
+      </div>
+      <% if (messages.error) { %>
+        <p class="error">
+          <%= messages.error %>
+        </p>
+      <% } %>
+      <button type="submit">Login</button>
+      <p>Don't have an account? <a href="/signup">Sign up</a></p>
+    </form>
+  </div>
 </body>
 </html>

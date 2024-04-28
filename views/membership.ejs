@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
   <link rel="stylesheet" href="css/membership.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
   <title>JKT48 Membership</title>
 
   <style>
@@ -42,6 +44,24 @@
     .dropdown:hover .dropdown-content {
       display: block;
     }
+
+    .dropdown:hover .dropdown-content .name{
+      /* Show the dropdown menu on click */
+      display: flex;
+      padding: 10px;
+    }
+    .dropdown:hover .dropdown-content .name a{
+      /* Show the dropdown menu on click */
+      height: 1rem;
+    }
+    .dropdown:hover .dropdown-content .name a:hover{
+      /* Show the dropdown menu on click */
+      background-color: #f9f9f9;
+    }
+
+    .logout{
+      margin-top: 1rem;
+    }
   </style>
 </head>
 
@@ -74,7 +94,13 @@
           <% if (user) { %>
           <li class="link"><button class="btn"><%= user.name%> <i class="fa fa-caret-down"></i></button></li>
           <div class="dropdown-content">
-            <a href="/logout">Logout</a>
+            <div class="name">
+              <%= user.name %>
+              <a href="/profile" class="settings" title="Settings" data-toggle="modal" data-target="#">
+                <i class="material-icons">&#xE8B8;</i>
+              </a>
+            </div>
+            <a href="/logout" class="logout">Logout</a>
           </div>
           <% } %>
           <li></li>
