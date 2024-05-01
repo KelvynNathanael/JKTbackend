@@ -46,6 +46,11 @@
 </head>
 
 <body>
+  <% function formatDate(dateString) { %>
+    <% const date = new Date(dateString); %>
+    <% const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`; %>
+    <% return formattedDate; %>
+    <% } %>
   <header class="header">
     <nav>
       <div class="nav__header">
@@ -151,42 +156,19 @@
         our theater is a popular destination for music and pop culture fans.
       </p>
       <div class="class__grid">
-        <div class="class__card">
-          <img src="images\Theater_no_megami.jpg" alt="class" />
+        <% theaters.forEach((theater, index) => { %>
+          <div class="class__card">
+          <img src="<%= theater.image  %>" alt="class" />
           <div class="class__content">
-            <h4>JKT48 Dewi Theater</h4>
-            <hr>
-            <p>Tanggal: Kamis, 25 April 2024  
-              Waktu: Pukul 18.00 WIB</p>
+            <h4><%= theater.title  %></h4>
+            <h5><%= theater.description %></h5>
+            <br>
+            <div class="time">
+              Start Date : <%= formatDate(theater.startAt)%>
+            </div>
           </div>
         </div>
-        <div class="class__card">
-          <img src="images\aturan.jpg" alt="class" />
-          <div class="class__content">
-            <h4>JKT48 Aturan Anti Cinta</h4>
-            <hr>
-            <p>Tanggal: Jumat, 26 April 2024  
-              Waktu: Pukul 17.00 WIB</p>
-          </div>
-        </div>
-        <div class="class__card">
-          <img src="images\demi.jpg" alt="class" />
-          <div class="class__content">
-            <h4>JKT48 Demi Seseorang</h4>
-            <hr>
-            <p>Tanggal: Sabtu, 27 April 2024  
-              Waktu: Pukul 18.00 WIB</p>
-          </div>
-        </div>
-        <div class="class__card">
-          <img src="images\remaja.jpg" alt="class" />
-          <div class="class__content">
-            <h4>JKT48 Gadis" Remaja</h4>
-            <hr>
-            <p>Tanggal: Minggu, 28 April 2024  
-              Waktu: Pukul 19.00 WIB</p>
-          </div>
-        </div>
+        <% }); %>
       </div>
     </section>
 

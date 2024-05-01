@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const userModel = require("../models/userModel");
-const {verifyToken} = require('../passport-config');
+const TheaterData = require("../models/theaterModel"); // Import the userModel
 const jwt = require('jsonwebtoken');
-const { checkAuthenticated, checkNotAuthenticated,checkAdmin } = require("../middleware/authMiddleware");
+const { verifyToken, checkNotAuthenticated,checkAdmin } = require("../middleware/authMiddleware");
 
 // Routes
 router.get("/", (req, res) => {
@@ -40,11 +40,10 @@ router.get("/admin", checkAdmin,verifyToken,async (req, res, next) => {
 });
 router.get("/admin2", checkAdmin,verifyToken,async (req, res, next) => {
   try {
-    const users = await userModel.find({});
+    const theaters = await TheaterData.find({});
     res.render("admin/adminTheater", {
-      users,
+      theaters,
       messages: null,
-      user:req.user,
     });
   } catch (error) {
     next(error); 
@@ -61,7 +60,6 @@ router.get("/users",verifyToken, checkAdmin, async (req, res, next) => {
   }
 });
 
-
 //logout
 router.get('/logout', (req, res) => {
   req.logout(() => {
@@ -74,9 +72,10 @@ router.get('/logout', (req, res) => {
 });
 
 
-router.get("/membership", verifyToken,(req, res) => {
+router.get("/membership", verifyToken,async(req, res) => {
     // If authenticated, render the membership page and pass user information to the view
-    res.render("membership", { user: req.user });
+    const theaters = await TheaterData.find({});
+    res.render("membership", { theaters,user: req.user });
 });
 
 

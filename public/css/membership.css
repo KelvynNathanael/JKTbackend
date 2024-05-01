@@ -16,6 +16,7 @@
   box-sizing: border-box;
 }
 
+
 .section__container {
   max-width: var(--max-width);
   margin: auto;
@@ -526,6 +527,22 @@ nav {
   font-size: 0.8rem;
   color: #fff;
   text-align: center;
+}
+
+.class__grid .class__content{
+  text-align: center;
+  display: grid;
+  place-items: center;
+}
+.class__grid .class__content h5{
+  font-weight: lighter;
+}
+
+.time{
+  background-color:#993f8a  ;
+  width: 90%;
+  border-radius: 1rem;
+  margin-bottom: 0;
 }
 
 @media (width > 480px) {
