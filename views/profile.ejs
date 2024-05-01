@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/profile.css" />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+        <div class="profile">
+        <li class=""><a href="/membership" class="backBtn">Back</a></li>
+          <span class="circle one"></span>
+          <span class="circle two"></span>
+
+          <form action="index.html" autocomplete="off">
+            <h3 class="title">Profile</h3>
+            <img src="images/user.png" alt="User Image" class="user-img">
+            <div class="input-container">
+              <input type="text" name="name" class="input" />
+              <label for="">Username</label>
+              <span>Username</span>
+            </div>
+            <div class="container">
+            <button class="changePasswordBtn" onclick="changePassword()">Change Password</button>
+            <button class="updateAccountBtn" onclick="updateAccount()">Update Account</button>
+            <button class="deleteAccountBtn" onclick="deleteAccount()">Delete Account</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/contact.js"></script>
+  </body>
+</html>
