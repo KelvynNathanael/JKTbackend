@@ -30,10 +30,17 @@ exports.updateUser = async (req, res) => {
 exports.changePassword = async (req, res) => {
     const {id} = req.body;
     const User = await userModel.findById(id);
+    
+    try {
+      
+    } catch (error) {
+      
+    }
+
     res.render('profile',{
         user: User,
         messages: null,
-        open : "a"
+        open : null
     })
 
 };
