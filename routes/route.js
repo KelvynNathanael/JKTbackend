@@ -57,6 +57,10 @@ router.get("/users",verifyToken, checkAdmin, async (req, res, next) => {
   }
 });
 
+router.get("/payment", verifyToken, async (req,res,next) =>{
+  res.render("payment");
+});
+
 
 //logout
 router.get('/logout', (req, res) => {

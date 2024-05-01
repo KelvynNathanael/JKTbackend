@@ -19,7 +19,7 @@ exports.createUser = async (req, res) => {
     await addUser(userData);
     res.redirect("/admin")
   };
-//create user via admin 
+//edit user via admin 
 exports.editUser = async (req, res) => {
     const { id, name, password, isAdmin } = req.body;
     const isAdminValue = isAdmin === 'on';
