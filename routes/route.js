@@ -26,6 +26,10 @@ router.get("/contact", verifyToken, (req, res) => {
   res.render("contact");
 });
 
+router.get("/profile", verifyToken, (req, res) => {
+  res.render("profile",{user:req.user,messages:null,open:null});
+});
+
 router.get("/admin", checkAdmin,verifyToken,async (req, res, next) => {
   try {
     const users = await userModel.find({});
