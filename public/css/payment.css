@@ -10,7 +10,7 @@
 body {
     font-family: 'Inter', sans-serif;
     color: var(--gray-900);
-    background-color: var(--gray-50);
+    background-color: #FAF9FE;
 }
 .container {
     max-width: 940px;
@@ -19,76 +19,33 @@ body {
 }
 
 
-
-
-
 .payment-section {
     padding: 48px 0;
 }
+
 .payment-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
 }
-.payment-header {
-    padding: 24px;
-    background-color: var(--indigo-500);
-    border-radius: 12px;
-    padding-bottom: 72px;
-}
-.payment-header-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: var(--indigo-600);
-    color: var(--white);
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
-}
-.payment-header-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--white);
-    line-height: 1.4;
-    margin-bottom: 4px;
-}
-.payment-header-description {
-    font-size: 15px;
-    color: var(--gray-200);
-    line-height: 1.5;
-}
-.payment-content {
-    padding: 24px;
-    margin-top: -64px;
-    position: relative;
-}
-.payment-content::before {
-    content: '';
-    position: absolute;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
-    height: 16px;
-    border-radius: 4px;
-    background-color: var(--indigo-600);
-}
+
+
+
 .payment-body {
     background-color: var(--white);
     border-radius: 0 0 8px 8px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, .05), inset 0 8px 0 rgba(0, 0, 0, .05);
     position: relative;
     padding-top: 8px;
-    overflow: hidden;
+  
 }
-.payment-plan {
+.price__card {
+    background-color: #ffffff;
+    padding: 2rem 1rem;
     display: flex;
-    align-items: center;
-    padding: 12px;
-}
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
 .payment-plan-type {
     width: 40px;
     height: 40px;
@@ -103,11 +60,7 @@ body {
     border-radius: 4px;
     margin-right: 8px;
 }
-.payment-plan-info {
-    width: 100%;
-    margin-right: 8px;
-    display: grid;
-}
+
 .payment-plan-info-name {
     font-size: 13px;
     color: var(--gray-400);
@@ -122,15 +75,8 @@ body {
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.payment-plan-change {
-    color: var(--blue-500);
-    font-size: 12px;
-    font-weight: 600;
-    text-underline-offset: 2px;
-}
-.payment-plan-change:hover {
-    color: var(--blue-600);
-}
+
+
 .payment-summary-item {
     display: flex;
     align-items: center;
@@ -192,7 +138,7 @@ body {
 }
 .payment-form {
     padding: 24px;
-    background-color: var(--white);
+    background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, .05);
 }
@@ -224,26 +170,47 @@ body {
     position: relative;
     flex-shrink: 0;
 }
-
-
-
-input:checked + .payment-method-item {
-    border-color: var(--indigo-500);
+.payment-right .payment-method .dana img{ 
+    height: 4.5rem;
+ }
+.selected{
+    border: 2px solid black;
 }
-input:checked + .payment-method-item::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background-color: var(--indigo-500);
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwLjAwMDcgMTUuMTcwOUwxOS4xOTMxIDUuOTc4NTJMMjAuNjA3MyA3LjM5MjczTDEwLjAwMDcgMTcuOTk5M0wzLjYzNjcyIDExLjYzNTRMNS4wNTA5MyAxMC4yMjEyTDEwLjAwMDcgMTUuMTcwOVoiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMSkiPjwvcGF0aD48L3N2Zz4=");
-    background-size: 12px;
-    background-position: center;
-    background-repeat: no-repeat;
+.price__card {
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
+.price__content {
+  flex: 1;
+  margin-bottom: 2rem;
+}
+.price__content img {
+    max-width: 70px;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+  }
+  
+  .price__content h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+  
+  .price__content p {
+    margin-bottom: 1rem;
+    color: var(--text-light);
+  }
+
+  .price__content hr {
+    margin-bottom: 1rem;
+  }
+
+
+
 .payment-method-item > img {
     width: 100%;
     height: 100%;
@@ -312,14 +279,8 @@ input:checked + .payment-method-item::before {
     background-color: var(--indigo-600);
 }
 .payment-form-submit-button > i {
-    margin-right: 8px;
+    margin-right: 10ypx;
 }
-.payment-right .payment-method .dana img{ 
-   height: 4.5rem;
-}
-
-
-
 
 @media screen and (max-width: 767px) {
     .payment-wrapper {

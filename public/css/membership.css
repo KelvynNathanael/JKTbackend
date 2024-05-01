@@ -247,9 +247,6 @@ nav {
   transition: 0.3s;
 }
 
-.class__grid .class__card:hover{
-
-}
 
 .class__grid .class__card img{
   max-height: 17rem;
