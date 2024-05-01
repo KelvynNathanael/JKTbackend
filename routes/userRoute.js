@@ -15,5 +15,6 @@ app.use(flash());
 
 router.post("/updateUser", userController.updateUser);
 router.post("/changePassword", userController.changePassword);
+router.post("/deleteuser", userController.deleteUser);
 
 module.exports = router;
