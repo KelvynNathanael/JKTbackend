@@ -14,6 +14,10 @@ router.get("/login", checkNotAuthenticated, (req, res) => {
   res.render("index", { messages: req.flash() });
 });
 
+router.get("/profile", checkNotAuthenticated, (req, res) => {
+  res.render("profile", { messages: req.flash() });
+});
+
 router.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("signup", { messages: req.flash() });
 });
