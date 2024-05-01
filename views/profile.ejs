@@ -97,10 +97,9 @@
         const myModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
         myModal.show();
       }
-        // Get the button and modal elements
-        const changePasswordButton = document.querySelector('.btn-primary');
 
-        // Add event listener to the button to open the modal
+    //   open modal by button
+        const changePasswordButton = document.querySelector('.btn-primary');
         changePasswordButton.addEventListener('click', () => {
             $('#changePasswordModal').modal('show');
         });
