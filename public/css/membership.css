@@ -16,6 +16,7 @@
   box-sizing: border-box;
 }
 
+
 .section__container {
   max-width: var(--max-width);
   margin: auto;
@@ -525,6 +526,22 @@ nav {
   text-align: center;
 }
 
+.class__grid .class__content{
+  text-align: center;
+  display: grid;
+  place-items: center;
+}
+.class__grid .class__content h5{
+  font-weight: lighter;
+}
+
+.time{
+  background-color:#993f8a  ;
+  width: 90%;
+  border-radius: 1rem;
+  margin-bottom: 0;
+}
+
 @media (width > 480px) {
   .class__grid {
     grid-template-columns: repeat(2, 1fr);
@@ -639,5 +656,16 @@ nav {
 
   .price__card {
     padding: 2rem;
+  }
+
+  .class__grid .class__card .class__content p{
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .class__grid .class__card .class__content .time{
+    
+  }
+  .class__grid .class__card .class__content {
+    text-align: center;
   }
 }

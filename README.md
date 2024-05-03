@@ -6,9 +6,5 @@ Gregorio Melvin Karnikov (535220085)
 
 ## Installation
 ```
-$ npm install express
-```
-or 
-```
-$ npm i express
+$ npm install
 ```

@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
   <link rel="stylesheet" href="css/membership.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
   <title>JKT48 Membership</title>
 
   <style>
@@ -42,10 +44,33 @@
     .dropdown:hover .dropdown-content {
       display: block;
     }
+
+    .dropdown:hover .dropdown-content .name{
+      /* Show the dropdown menu on click */
+      display: flex;
+      padding: 10px;
+    }
+    .dropdown:hover .dropdown-content .name a{
+      /* Show the dropdown menu on click */
+      height: 1rem;
+    }
+    .dropdown:hover .dropdown-content .name a:hover{
+      /* Show the dropdown menu on click */
+      background-color: #f9f9f9;
+    }
+    .logout{
+      margin-bottom: 0.5rem;
+    }
+
   </style>
 </head>
 
 <body>
+  <% function formatDate(dateString) { %>
+    <% const date = new Date(dateString); %>
+    <% const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`; %>
+    <% return formattedDate; %>
+    <% } %>
   <header class="header">
     <nav>
       <div class="nav__header">
@@ -69,7 +94,14 @@
           <% if (user) { %>
           <li class="link"><button class="btn"><%= user.name%> <i class="fa fa-caret-down"></i></button></li>
           <div class="dropdown-content">
-            <a href="/logout">Logout</a>
+            <div class="name">
+              <%= user.name %>
+              <a href="/profile" class="settings" title="Settings" data-toggle="modal" data-target="#">
+                <i class="material-icons">&#xE8B8;</i>
+              </a>
+            </div>
+            <a href="/admin">Admin</a>
+            <a href="/logout" class="logout">Logout</a>
           </div>
           <% } %>
           <li></li>
@@ -151,42 +183,19 @@
         our theater is a popular destination for music and pop culture fans.
       </p>
       <div class="class__grid">
-        <div class="class__card">
-          <img src="images\Theater_no_megami.jpg" alt="class" />
+        <% theaters.forEach((theater, index) => { %>
+          <div class="class__card">
+          <img src="<%= theater.image  %>" alt="class" />
           <div class="class__content">
-            <h4>Thursday</h4>
-            <li>1pm</li>
-            <li>5pm</li>
-            <li>9pm</li>
+            <h4><%= theater.title  %></h4>
+            <h5><%= theater.description %></h5>
+            <br>
+            <div class="time">
+              Start Date : <%= formatDate(theater.startAt)%>
+            </div>
           </div>
         </div>
-        <div class="class__card">
-          <img src="images\aturan.jpg" alt="class" />
-          <div class="class__content">
-            <h4>Friday</h4>
-            <li>1pm</li>
-            <li>5pm</li>
-            <li>9pm</li>
-          </div>
-        </div>
-        <div class="class__card">
-          <img src="images\demi.jpg" alt="class" />
-          <div class="class__content">
-            <h4>Saturday</h4>
-            <li>1pm</li>
-            <li>5pm</li>
-            <li>9pm</li>
-          </div>
-        </div>
-        <div class="class__card">
-          <img src="images\remaja.jpg" alt="class" />
-          <div class="class__content">
-            <h4>Sunday</h4>
-            <li>1pm</li>
-            <li>5pm</li>
-            <li>9pm</li>
-          </div>
-        </div>
+        <% }); %>
       </div>
     </section>
 

@@ -1,29 +1,63 @@
-const passport = require("passport");
+const TheaterData = require("../models/theaterModel"); // Import the userModel
+const userModel = require("../models/userModel"); // Import the userModel
+const jwt = require("jsonwebtoken");
 
-function checkAdmin(req, res, next) {
-  // Cek jika sudah login dan adalah admin
-  if (req.isAuthenticated() && req.user.isAdmin) {
+
+function checkAdmin(req, res, next,err) {
+  if (err) {
+    res.redirect("/")
+  }
+  // Cek jika adalah admin
+  if (req.user.isAdmin) {
     return next();
   }
   // jika user bukan admin maka akan di arahkan ke login, jika sudah login dan bukan admin akan ke halaman membership
   res.redirect("/login");
 }
 
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect("/login");
+async function verifyToken(req, res, next) {
+  const token = req.cookies.jwt;
+  if (!token) {
+    const theaters = await TheaterData.find({}); 
+    return res.render("membership",{user:null,theaters})
   }
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
+    if (err) {
+      if (err.name === "TokenExpiredError") {
+        console.log('pls');
+        res.clearCookie("jwt");
+        return res.redirect("/logout");
+      } else {
+        // Invalid token, redirect to login
+        return res.redirect("/login");
+      }
+    }
+
+    try {
+      const user = await userModel.findById(decoded._id);
+      if (!user) {
+        // User not found, clear the cookie and redirect to login
+        res.clearCookie("jwt");
+        return res.redirect("/");
+      }
+      req.user = user;
+      next();
+    } catch (error) { 
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+}
   
   // Middleware untuk redirect user ke halaman utama jika sudah login
   function checkNotAuthenticated(req, res, next) {
-    console.log(req.isAuthenticated);
-    if (req.isAuthenticated()) {
-      return res.redirect("/");
+    const token = req.cookies.jwt;
+    if (!token) {
+      next();
     }
-    next();
+    return res.redirect("/");
   }
   
-  module.exports = { checkAuthenticated, checkNotAuthenticated, checkAdmin};
+  module.exports = { verifyToken, checkNotAuthenticated, checkAdmin};
   
