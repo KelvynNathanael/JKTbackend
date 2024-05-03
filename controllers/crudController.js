@@ -29,6 +29,7 @@ exports.createUser = async (req, res) => {
   res.redirect("/admin");
 };
 //edit user via admin
+
 exports.editUser = async (req, res) => {
   const { id, name, password, isAdmin } = req.body;
   const isAdminValue = isAdmin === "on";

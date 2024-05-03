@@ -60,6 +60,19 @@ router.get("/users",verifyToken, checkAdmin, async (req, res, next) => {
   }
 });
 
+
+router.get("/payment1", verifyToken, async (req,res,next) =>{
+  res.render("payment1",{user:req.user});
+});
+
+router.get("/payment2", verifyToken, async (req,res,next) =>{
+  res.render("payment2",{user:req.user});
+});
+
+router.get("/payment3", verifyToken, async (req,res,next) =>{
+  res.render("payment3",{user:req.user});
+});
+
 //logout
 router.get('/logout', (req, res) => {
   req.logout(() => {
