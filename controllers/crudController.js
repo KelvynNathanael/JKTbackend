@@ -35,7 +35,6 @@ exports.editUser = async (req, res) => {
   const { id, name, password, isAdmin } = req.body;
   const isAdminValue = isAdmin === "on";
   const userData = { name, password, isAdmin: isAdminValue };
-
   try {
     // Update the user data in the database
     await userModel.findByIdAndUpdate(id, userData);

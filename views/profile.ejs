@@ -34,12 +34,13 @@
           <form action="/updateUser" method="post" autocomplete="off">
             <h3 class="title">Profile</h3>
             <img src="images/user.png" alt="User Image" class="user-img">
+            <input type="hidden" name="id" value="<%= user.id  %>">
             <div class="input-container">
               <input type="text" name="name" class="input" value="<%= user.name %>" required>
             </div>
             <div class="container">
               <button type="button" class="changePasswordBtn" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</button>
-              <button type="button" class="updateAccountBtn" onclick="updateAccount()">Update Account</button>
+              <button type="submit" class="updateAccountBtn">Update Account</button>
             </div>
           </form>
           <form id="deleteUserForm_<%= user._id %>" action="/deleteuser" method="post" onsubmit="return confirmDelete('<%= user._id %>')" class="mt-3">
