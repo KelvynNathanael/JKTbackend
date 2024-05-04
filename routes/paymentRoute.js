@@ -10,7 +10,7 @@ router.post("/admin/deletePayment", async (req, res, next) => {
     const Paymentsid = req.body.paymentId;
     try {
       await paymentModel.findByIdAndDelete(Paymentsid);
-      console.log(`payment ${paymentsId.name} deleted`);
+      console.log(`payment ${PaymentsId.name} deleted`);
       res.redirect("/admin3");
     } catch (error) {
       next(error);
