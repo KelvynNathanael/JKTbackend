@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "663488da452310df4aac9fa8"
+  },
+  "title": "Dewi Theater",
+  "description": "Dewi Theater JKT48, bukan sembarang pertunjukan. Di panggung inilah, magis terjalin antara idola JKT48 dan para penggemar setia. Lebih dari sekadar penampilan musik dan tari, Dewi Theater menghadirkan pengalaman emosional yang tak terlupakan.",
+  "startAt": {
+    "$date": "2024-04-25T00:00:00.000Z"
+  },
+  "image": "uploads\\image-1714718938911.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66348942452310df4aac9fae"
+  },
+  "title": "Aturan Anti Cinta",
+  "description": "Aturan Anti Cinta JKT48: Drama Cinta Terlarang di Panggung Impian Aturan Anti Cinta JKT48, bukan sekadar larangan, tetapi drama cinta terlarang yang membuat penasaran dan menambah bumbu dalam pertunjukan teater JKT48. Di balik gemerlap lampu sorot dan kostum indah, kisah cinta para member JKT48 tersembunyi, menambah dimensi pada cerita di atas panggung.",
+  "startAt": {
+    "$date": "2024-04-26T00:00:00.000Z"
+  },
+  "image": "uploads\\image-1714719042130.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66348997452310df4aac9fba"
+  },
+  "title": "Demi Seseorang",
+  "description": "Demi Seseorang bercerita tentang cinta sejati yang mengalami berbagai rintangan. Para member JKT48 menghidupkan karakter yang berjuang untuk mempertahankan cinta mereka, tak peduli apapun halangannya. Kisah ini membuat para penonton berempati, terbawa perasaan, dan mengingat kembali kisah cinta mereka sendiri.",
+  "startAt": {
+    "$date": "2024-04-27T00:00:00.000Z"
+  },
+  "image": "uploads\\image-1714719127858.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "663489d7452310df4aac9fc0"
+  },
+  "title": "Gadis Gadis Remaja",
+  "description": "Gadis-Gadis Remaja JKT48 bukan sekadar pertunjukan biasa. Ini adalah debut stage para member JKT48 generasi baru yang penuh dengan energi dan kelucuan. Di panggung inilah para member muda dan berbakat ini memperkenalkan diri kepada para penggemar untuk pertama kalinya.",
+  "startAt": {
+    "$date": "2024-04-28T00:00:00.000Z"
+  },
+  "image": "uploads\\image-1714719191189.jpg",
+  "__v": 0
+}]
