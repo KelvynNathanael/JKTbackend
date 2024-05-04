@@ -16,7 +16,7 @@ async function verifyToken(req, res, next) {
   const token = req.cookies.jwt;
   if (!token) {
     const theaters = await TheaterData.find({}); 
-    return res.render("membership",{user:null,theaters})
+    return next();
   }
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
