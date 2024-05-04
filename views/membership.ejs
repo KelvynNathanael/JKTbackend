@@ -41,35 +41,36 @@
     .dropdown-content a:hover {
       background-color: #ddd;
     }
-    
+
 
     .dropdown:hover .dropdown-content {
       display: block;
     }
 
-    .dropdown:hover .dropdown-content .name{
+    .dropdown:hover .dropdown-content .name {
       /* Show the dropdown menu on click */
       display: flex;
       padding: 10px;
     }
-    .dropdown:hover .dropdown-content .name a{
+
+    .dropdown:hover .dropdown-content .name a {
       /* Show the dropdown menu on click */
       height: 1rem;
     }
-    .dropdown:hover .dropdown-content .name a:hover{
+
+    .dropdown:hover .dropdown-content .name a:hover {
       /* Show the dropdown menu on click */
       background-color: #f9f9f9;
     }
-
   </style>
 </head>
 
 <body>
   <% function formatDate(dateString) { %>
-    <% const date = new Date(dateString); %>
-    <% const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`; %>
-    <% return formattedDate; %>
-    <% } %>
+  <% const date = new Date(dateString); %>
+  <% const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`; %>
+  <% return formattedDate; %>
+  <% } %>
   <header class="header">
     <nav>
       <div class="nav__header">
@@ -109,7 +110,7 @@
         </div>
       </ul>
     </nav>
-    <div class="section__container header__container" id="home"> 
+    <div class="section__container header__container" id="home">
       <div class="header__image">
         <img src="images\Member_JKT48_New_Era-removebg-preview.png" alt="" />
       </div>
@@ -120,7 +121,18 @@
           Be part of the ultimate fan experience with JKT48 Membership. Get access to exclusive events, merchandise, and more!
         </p>
         <% if (user) { %>
-        <h4>Hello, <%=user.name %></h4>
+        <h4>Halo, <%=user.name %></h4>
+
+        <% if(pay.length > 0)  {%>
+        <% const expiresAt = new Date(pay[0].expiresAt); %>
+        <% const createdAt = new Date(pay[0].createdAt); %>
+        <% const remainingTime = expiresAt.getTime() - createdAt.getTime(); %>
+        <% const daysRemaining = Math.floor(remainingTime / (1000 * 60 * 60 * 24)); %>
+        <% const hoursRemaining = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); %>
+        <% const minutesRemaining = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60)); %>
+        <h4>Waktu subscription kamu sisa <%= daysRemaining %> hari</h4>
+        <% } %>
+
         <% } else { %>
         <div class="header__btn">
           <a href="/login" class="btn">Join NOW</a>
@@ -184,8 +196,9 @@
         our theater is a popular destination for music and pop culture fans.
       </p>
       <div class="class__grid">
+
         <% theaters.forEach((theater, index) => { %>
-          <div class="class__card">
+        <div class="class__card">
           <img src="<%= theater.image  %>" alt="class" />
           <div class="class__content">
             <h4><%= theater.title  %></h4>
@@ -268,6 +281,7 @@
       </div>
     </section>
 
+    <% if (pay < 1) { %>
     <section class="section__container price__container" id="price">
       <h2 class="section__header">Membership Pricing</h2>
       <p class="section__description">
@@ -321,7 +335,7 @@
         </div>
       </div>
     </section>
-
+    <% } %>
 
     <footer class="footer">
       <div class="section__container footer__container">

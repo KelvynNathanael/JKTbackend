@@ -4,12 +4,15 @@ const jwt = require("jsonwebtoken");
 
 
 async function checkAdmin(req, res, next) {
-  // Cek jika adalah admin    
-  if (req.user.isAdmin) {
-    return next();
+  try {
+    // Cek jika adalah admin    
+    if (req.user.isAdmin) {
+      return next();
+    }
+  } catch (error) {
+    // jika user bukan admin maka akan di arahkan ke login, jika sudah login dan bukan admin akan ke halaman membership
+    res.redirect("/membership");
   }
-  // jika user bukan admin maka akan di arahkan ke login, jika sudah login dan bukan admin akan ke halaman membership
-  res.redirect("/membership");
 }
 
 async function verifyToken(req, res, next) {
