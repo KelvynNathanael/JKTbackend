@@ -17,6 +17,7 @@
     .dropdown {
       float: left;
       overflow: hidden;
+      padding: 1.5rem;
     }
 
     .dropdown-content {
@@ -40,6 +41,7 @@
     .dropdown-content a:hover {
       background-color: #ddd;
     }
+    
 
     .dropdown:hover .dropdown-content {
       display: block;
@@ -57,9 +59,6 @@
     .dropdown:hover .dropdown-content .name a:hover{
       /* Show the dropdown menu on click */
       background-color: #f9f9f9;
-    }
-    .logout{
-      margin-bottom: 0.5rem;
     }
 
   </style>
@@ -100,7 +99,9 @@
                 <i class="material-icons">&#xE8B8;</i>
               </a>
             </div>
+            <% if(user.isAdmin){ %>
             <a href="/admin">Admin</a>
+            <% } %>
             <a href="/logout" class="logout">Logout</a>
           </div>
           <% } %>

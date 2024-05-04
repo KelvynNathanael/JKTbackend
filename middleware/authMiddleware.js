@@ -3,16 +3,13 @@ const userModel = require("../models/userModel"); // Import the userModel
 const jwt = require("jsonwebtoken");
 
 
-function checkAdmin(req, res, next,err) {
-  if (err) {
-    res.redirect("/")
-  }
-  // Cek jika adalah admin
+async function checkAdmin(req, res, next) {
+  // Cek jika adalah admin    
   if (req.user.isAdmin) {
     return next();
   }
   // jika user bukan admin maka akan di arahkan ke login, jika sudah login dan bukan admin akan ke halaman membership
-  res.redirect("/login");
+  res.redirect("/membership");
 }
 
 async function verifyToken(req, res, next) {
@@ -25,7 +22,6 @@ async function verifyToken(req, res, next) {
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
     if (err) {
       if (err.name === "TokenExpiredError") {
-        console.log('pls');
         res.clearCookie("jwt");
         return res.redirect("/logout");
       } else {

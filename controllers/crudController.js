@@ -2,6 +2,7 @@ const multer = require("multer");
 const path = require("path");
 const userModel = require("../models/userModel"); // Import the userModel
 const TheaterData = require("../models/theaterModel"); // Import the userModel
+const paymentData = require("../models/paymentModel"); //Import the paymentModel
 const fs = require("fs");
 
 function addUser(data) {
