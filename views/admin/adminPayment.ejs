@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Users Table</title>
+  <title>payments Table</title>
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -292,10 +292,9 @@ button {
         </a>
       </div>
 
-      <a href="#" class="btn btn-secondary active"> <span>Users Table</span></a>
+      <a href="/admin1" class="btn btn-secondary "> <span>Users Table</span></a>
       <a href="/admin2" class="btn btn-secondary"> <span>Theater Table</span></a>
-      <a href="/admin3" class="btn btn-secondary"> <span>Payment Table</span></a>
-      <a href="/membership" class="btn btn-secondary"> <span>Landing Page</span></a>
+      <a href="#" class="btn btn-secondary active"> <span>Payment Table</span></a>
     </div>
     <div class="table-responsive">
       <div class="table-wrapper">
@@ -317,26 +316,34 @@ button {
             <tr>
               <th class="no-sort" id="noSortButton">#</th>
               <th>Name</th>
-              <th>Date Created</th>
-              <th>isAdmin</th>
+              <th>Email</th>
+              <th>Number</th>
+              <th>Price</th>
+              <th>Type</th>
+              <th>expiresAt</th>
+              <th>createdAt</th>
               <th data-orderable="false">Action</th>
             </tr>
           </thead>
           <tbody>
-            <% users.forEach((user, index) => { %>
+            <% payments.forEach((payment, index) => { %>
             <tr>
               <td><%= index + 1 %></td>
-              <td><%= user.name %></td>
-              <td><%= formatDate(user.createdAt) %></td>
-              <td><%= user.isAdmin %></td>
+              <td><%= payment.name %></td>
+              <td><%= payment.email %></td>
+              <td><%= payment.number %></td>
+              <td><%= payment.price %></td>
+              <td><%= payment.type %></td>
+              <td><%= formatDate(payment.createdAt) %></td>
+              <td><%= formatDate(payment.expiresAt) %></td>
               <td>
-                <form id="deleteUserForm_<%= user._id %>" action="/admin/delete" method="post" onsubmit="return confirmDelete('<%= user.name %>')">
-                  <input type="hidden" name="userId" value="<%= user._id %>">
-                  <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="if (confirmDelete()) { document.getElementById('deleteUserForm_<%= user._id %>').submit(); }">
+                <form id="deletepaymentForm_<%= payment._id %>" action="/admin/deletepayment" method="post" onsubmit="return confirmDelete('<%= payment._id %>')">
+                  <input type="hidden" name="paymentId" value="<%= payment._id %>">
+                  <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="if (confirmDelete()) { document.getElementById('deletepaymentForm_<%= payment._id %>').submit(); }">
                     <i class="material-icons">&#xE5C9;</i>
                   </a>
                 </form>
-                <a href="#" class="settings" title="Settings" data-toggle="modal" data-target="#editUserModal" onclick="populateEditModal( '<%= user.id %>','<%= user.name %>', '<%= user.password %>','<%= user.isAdmin %>')">
+                <a href="#" class="settings" title="Settings" data-toggle="modal" data-target="#editpaymentModal" onclick="populateEditModal( '<%= payment.id %>','<%= payment.email %>', '<%= payment.number %>','<%= payment.price %>')">
                   <i class="material-icons">&#xE8B8;</i>
                 </a>
               </td>
@@ -349,29 +356,29 @@ button {
   </div>
 
   <!-- Create Modal -->
-  <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="editpaymentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+          <h5 class="modal-title" id="addUserModalLabel">Add New payment</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form id="addUserForm" action="/createUser" method="post">
+          <form id="addUserForm" action="/createPayment" method="post">
             <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" name="name">
+              <label for="email">Email</label>
+              <input type="text" class="form-control" id="emailUser" name="email">
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
-              <input type="text" class="form-control" id="password" name="password">
+              <label for="phone-number">Phone Number</label>
+              <input type="text" class="form-control" id="NumberUser" name="phone-number">
             </div>
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="isAdmin" name="isAdmin">
-              <label class="form-check-label" for="isAdmin">Is Admin</label>
-            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" class="form-control" id="priceUser" name="pricer">
+            </div>  
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">Save User</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -383,7 +390,7 @@ button {
   </div>
 
   <!-- Edit Modal -->
-  <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editpaymentModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -393,22 +400,22 @@ button {
           </button>
         </div>
         <div class="modal-body">
-          <form id="editUserForm" action="/editUser" method="post">
-            <input type="hidden" class="form-control" id="editUserId" name="id" value="">
+          <form id="editUserForm" action="/editpayment" method="post">
+            <input type="hidden" class="form-control" id="editpaymentId" name="id" value="">
             <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" id="editUserName" name="name" value="">
+              <label for="email">Email</label>
+              <input type="text" class="form-control" id="editemailpayment" name="email" value="">
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" id="editPassword" name="password" value="">
+              <label for="phone-number">Phone Number</label>
+              <input type="text" class="form-control" id="editnumberpayment" name="number"value="">
             </div>
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="editIsAdmin" name="isAdmin">
-              <label class="form-check-label" for="isAdmin">Admin</label>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" class="form-control" id="editpricepayment" name="price"value="">
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Update User</button>
+              <button type="submit" class="btn btn-primary">Update payment</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </form>
@@ -424,15 +431,11 @@ button {
   <% return formattedDate; %>
   <% } %>
   <script>
-    function populateEditModal(userId, userName, password, isAdmin) {
-      document.getElementById('editUserId').value = userId;
-      document.getElementById('editUserName').value = userName;
-      document.getElementById('editPassword').value = password;
-
-      var isAdminCheckbox = document.getElementById('editIsAdmin');
-      //set isAdmin value on edit view
-      var isAdminValue = isAdmin === 'true'; // Convert 'true' to true, 'false' to false bcuz isAdmin is string
-      isAdminCheckbox.checked = isAdminValue;
+    function populateEditModal(paymentId, email, number, price) {
+      document.getElementById('editpaymentId').value = paymentId;
+      document.getElementById('editemailpayment').value = email;
+      document.getElementById('editnumberpayment').value = number;
+      document.getElementById('editpricepayment').value = price;
 
     }
 

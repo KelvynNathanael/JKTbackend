@@ -16,9 +16,7 @@ async function initialize(passport, getUserByUsername, getUserById) {
       if (!user) {
         return done(null, false, { message: "Username not found" });
       }
-
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
       if (!isPasswordCorrect) {
         return done(null, false, { message: "Incorrect password" });
       }

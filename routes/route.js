@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userModel = require("../models/userModel");
 const TheaterData = require("../models/theaterModel"); // Import the userModel
+const paymentData = require("../models/paymentModel");
 const jwt = require('jsonwebtoken');
 const { verifyToken, checkNotAuthenticated,checkAdmin } = require("../middleware/authMiddleware");
 
@@ -26,11 +27,11 @@ router.get("/profile", verifyToken, (req, res) => {
   res.render("profile",{user:req.user,messages:null,open:null});
 });
 
-router.get("/admin", checkAdmin,verifyToken,async (req, res, next) => {
+router.get("/admin",verifyToken,checkAdmin,async (req, res, next) => {
   try {
     const users = await userModel.find({});
     res.render("admin/admin", {
-      users,
+      users:users,
       messages: null,
       user:req.user,
     });
@@ -38,11 +39,22 @@ router.get("/admin", checkAdmin,verifyToken,async (req, res, next) => {
     next(error); 
   }
 });
-router.get("/admin2", checkAdmin,verifyToken,async (req, res, next) => {
+router.get("/admin2", verifyToken,checkAdmin,async (req, res, next) => {
   try {
     const theaters = await TheaterData.find({});
     res.render("admin/adminTheater", {
       theaters,
+      messages: null,
+    });
+  } catch (error) {
+    next(error); 
+  }
+});
+router.get("/admin3", verifyToken,checkAdmin,async (req, res, next) => {
+  try {
+    const payments = await paymentData.find({});
+    res.render("admin/adminPayment", {
+      payments,
       messages: null,
     });
   } catch (error) {

@@ -40,22 +40,22 @@
 
 
                 <div class="payment-right">
-                    <form action="" method="post" class="payment-form">
+                    <form action="/paying" method="post" class="payment-form">
                         <h1 class="payment-title">Payment Details</h1>
                         <div class="payment-method">
-                            <input type="radio" name="payment-method" id="method-1" checked>
+                            <input type="radio" name="payment-method" id="method-1" value="gopay" checked>
                             <label for="method-1" class="payment-method-item">
-                                <img src="images/gopay.png" alt="">
+                                <img src="images/gopay.png" alt="" >
                             </label>
-                            <input type="radio" name="payment-method" id="method-2">
+                            <input type="radio" name="payment-method" id="method-2" value="ovo">
                             <label for="method-2" class="payment-method-item">
                                 <img src="images/Ovo.png" alt="">
                             </label>
-                            <input type="radio" name="payment-method" id="method-3">
+                            <input type="radio" name="payment-method" id="method-3" value="dana">
                             <label for="method-3" class="payment-method-item dana">
                                 <img src="images/dana.png" alt="">
                             </label>
-                            <input type="radio" name="payment-method" id="method-4">
+                            <input type="radio" name="payment-method" id="method-4" value="qris">
                             <label for="method-4" class="payment-method-item">
                                 <img src="images/qris.png" alt="">
                             </label>
@@ -92,6 +92,7 @@
                                         <div class="payment-summary-name">Total</div>
                                         <div class="payment-summary-price">-RP 220.000</div>
                                     </div>
+                                    <input type="hidden" for="harga" name="waktu" value="180" >
                                     <input type="hidden" for="harga" name="price" value="220000" >
                         
                         <button type="submit" class="payment-form-submit-button"><i class="ri-wallet-line"></i> Pay</button>
@@ -103,6 +104,19 @@
    
 
     <script>
+        // Get references to elements
+    const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
+    const typeInput = document.getElementById('type');
+
+    // Add event listener to each radio button
+    paymentMethodRadios.forEach(radio => {
+      radio.addEventListener('change', function() {
+        // If a radio button is checked, set its value to the type input
+        if (this.checked) {
+          typeInput.value = this.value; // Set the value of the type input to the value of the selected radio button
+        }
+      });
+    });
         const images = document.querySelectorAll('.payment-method-item');
 
         images.forEach(image =>{
