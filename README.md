@@ -12,7 +12,7 @@ $ npm install
 ## Preparation
 .env File
 ```
-SECRET_KEY=secret <br> 
+SECRET_KEY=secret
 ACCESS_TOKEN_SECRET=secret
 ```
 
