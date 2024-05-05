@@ -8,3 +8,13 @@ Gregorio Melvin Karnikov (535220085)
 ```
 $ npm install
 ```
+
+## Preparation
+.env File
+```
+SECRET_KEY=secret <br> 
+ACCESS_TOKEN_SECRET=secret
+```
+
+## How to run 
+Open Bash -> type "npm run serve"
